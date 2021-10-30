@@ -1,3 +1,4 @@
+
 CREATE DATABASE IF NOT EXISTS nostra_db;
 USE nostra_db;
 
@@ -12,7 +13,7 @@ UNIQUE(login)
 CREATE TABLE IF NOT EXISTS operations
 (
 id			SERIAL			PRIMARY KEY,
-user_id		BIGINT 			UNSIGNED NOT NULL,
+wallet_id		BIGINT 			UNSIGNED NOT NULL,
 create_at	TIMESTAMP		NOT NULL,
 type		VARCHAR(50)		NOT NULL,
 money		FLOAT8			NOT NULL
@@ -39,7 +40,7 @@ UNIQUE(email)
 CREATE TABLE IF NOT EXISTS  roles
 (
 id			SERIAL			PRIMARY KEY,
-role		CHARACTER(50)	NOT NULL
+name		CHARACTER(50)	NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS  bets
@@ -78,8 +79,8 @@ role_id		BIGINT			UNSIGNED NOT NULL
 );
 
 ALTER TABLE  operations 
-ADD CONSTRAINT fk_operations_user_id_users_id
- FOREIGN KEY (user_id) REFERENCES users (id) 
+ADD CONSTRAINT fk_operations_wallet_id_wallets_id
+ FOREIGN KEY (wallet_id) REFERENCES wallets (id) 
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
 
