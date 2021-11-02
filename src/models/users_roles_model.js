@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
-let users = [
-    'users',
+let users_roles = [
+    'users_roles',
     {
         id: {
             type: DataTypes.BIGINT.UNSIGNED,
@@ -9,19 +9,19 @@ let users = [
             allowNull: false,
             unique: true
         },
-        login: {
-            type: DataTypes.STRING(50),
+        user_id: {
+            type: DataTypes.BIGINT.UNSIGNED,
             allowNull: false,
-            unique: true
         },
-        password: {
-            type: DataTypes.STRING(50),
-            allowNull: false
-        }       
+        role_id: {
+            type: DataTypes.BIGINT.UNSIGNED,
+            primaryKey: true,
+            allowNull: false,
+        },      
     },
     {
         timestamps: false
     }
 ]
 
-module.exports = users;
+module.exports = users_roles;
