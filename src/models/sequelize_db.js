@@ -45,7 +45,7 @@ users.hasMany( bets, { foreignKey: 'user_id' });
 wallets.hasMany( operations, { foreignKey: 'wallet_id' });
 results.hasMany( bets, { foreignKey: 'result_id' });
 events.hasMany( results,{ foreignKey: 'event_id' });
-events.belongsTo( users,{ foreignKey: 'creator_id' });
+events.belongsTo( users,{ foreignKey: 'creator_id', onDelete: 'SET NULL' });  //optional association
 
 
 
