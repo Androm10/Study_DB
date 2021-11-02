@@ -13,7 +13,7 @@ UNIQUE(login)
 CREATE TABLE IF NOT EXISTS operations
 (
 id			SERIAL			PRIMARY KEY,
-wallet_id		BIGINT 			UNSIGNED NOT NULL,
+wallet_id	BIGINT 			UNSIGNED NOT NULL,
 create_at	TIMESTAMP		NOT NULL,
 type		VARCHAR(50)		NOT NULL,
 money		FLOAT8			NOT NULL
@@ -65,6 +65,8 @@ coefficient	FLOAT8			NOT NULL
 CREATE TABLE IF NOT EXISTS  events
 (
 id			SERIAL			PRIMARY KEY,
+name		VARCHAR(100)	NOT NULL,
+info		TEXT,
 creator_id	BIGINT			UNSIGNED,
 create_at	TIMESTAMP		NOT NULL,
 deleted_at	TIMESTAMP,
