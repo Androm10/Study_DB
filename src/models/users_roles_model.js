@@ -7,7 +7,8 @@ let users_roles = [
             type: DataTypes.BIGINT.UNSIGNED,
             primaryKey: true,
             allowNull: false,
-            unique: true
+            unique: true,
+            autoIncrement: true
         },
         user_id: {
             type: DataTypes.BIGINT.UNSIGNED,
