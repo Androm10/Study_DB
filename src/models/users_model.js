@@ -7,7 +7,8 @@ let users = [
             type: DataTypes.BIGINT.UNSIGNED,
             primaryKey: true,
             allowNull: false,
-            unique: true
+            unique: true,
+            autoIncrement: true
         },
         login: {
             type: DataTypes.STRING(50),

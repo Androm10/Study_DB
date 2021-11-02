@@ -7,7 +7,8 @@ let roles = [
             type: DataTypes.BIGINT.UNSIGNED,
             primaryKey: true,
             allowNull: false,
-            unique: true
+            unique: true,
+            autoIncrement: true
         },       
         name: {
             type: DataTypes.CHAR(50),

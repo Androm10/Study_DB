@@ -7,7 +7,8 @@ let results = [
             type: DataTypes.BIGINT.UNSIGNED,
             primaryKey: true,
             allowNull: false,
-            unique: true
+            unique: true,
+            autoIncrement: true
         },
         event_id: {
             type: DataTypes.BIGINT.UNSIGNED,
