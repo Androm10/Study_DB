@@ -1,6 +1,6 @@
 const { DataTypes }= require('sequelize');
 
-let user_info = [
+let userInfo = [
     'user_info',
     {
         id: {
@@ -10,10 +10,11 @@ let user_info = [
             unique: true,
             autoIncrement: true
         },
-        user_id: {
+        userId: {
             type: DataTypes.BIGINT.UNSIGNED,
             allowNull: false,
-            unique: true
+            unique: true,
+            field: 'user_id'
         },
         email: {
             type: DataTypes.STRING(255),
@@ -33,4 +34,4 @@ let user_info = [
     }
 ]
 
-module.exports = user_info;
+module.exports = userInfo;

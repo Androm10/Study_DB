@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
-app.use('/events',eventRouter);
+app.use('/events', eventRouter);
 
 
 function startServer(){

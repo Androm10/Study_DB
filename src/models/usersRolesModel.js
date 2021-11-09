@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 
-let users_roles = [
+let usersRoles = [
     'users_roles',
     {
         id: {
@@ -10,14 +10,16 @@ let users_roles = [
             unique: true,
             autoIncrement: true
         },
-        user_id: {
+        userId: {
             type: DataTypes.BIGINT.UNSIGNED,
             allowNull: false,
+            field: 'user_id'
         },
-        role_id: {
+        roleId: {
             type: DataTypes.BIGINT.UNSIGNED,
             primaryKey: true,
             allowNull: false,
+            field: 'role_id'
         },      
     },
     {
@@ -25,4 +27,4 @@ let users_roles = [
     }
 ]
 
-module.exports = users_roles;
+module.exports = usersRoles;

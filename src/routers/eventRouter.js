@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 let { eventValidator } = require('../validators/eventValidator');
-let eventAddController = require('../controllers/eventAddController');
+let eventController = require('../controllers/eventController');
 
 router.use( (req,res,next) =>{
     console.log('server: request to ' + req.url + 
@@ -12,6 +12,6 @@ router.use( (req,res,next) =>{
     next();
 });
 
-router.post('/create', eventValidator, eventAddController);
+router.post('/create', eventValidator, eventController.addEvent);
 
 module.exports = router;

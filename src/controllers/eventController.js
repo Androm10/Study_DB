@@ -1,9 +1,11 @@
 const express = require('express');
-const sequelize = require('../models/sequelize_db');
+const sequelize = require('../models/sequelizeDB');
 //const sequelize = require('../models/sequelize_db');
 const { validationResult } = require('../validators/eventValidator');
 
-let eventAddController = (req, res) => {
+let eventController = {
+
+ addEvent :  function(req, res){
 
     console.log("server: starting add event operation");
     const errors = validationResult(req);
@@ -18,10 +20,10 @@ let eventAddController = (req, res) => {
       let event = {
         name : req.body.name,
         info : req.body.info ?? '',
-        creator_id : req.body.creator_id,
-        create_at : new Date(),
-        deleted_at : req.body.deleted_at,
-        is_active : req.body.is_active ?? true
+        creatorId : req.body.creatorId,
+        createAt : new Date(),
+        deletedAt : req.body.deletedAt,
+        isActive : req.body.isActive ?? true
       }
       try {
         sequelize.models.events.create(event);
@@ -31,6 +33,6 @@ let eventAddController = (req, res) => {
       }
 
       res.status(201).json(event);
+}
 };
-
-module.exports = eventAddController;
+module.exports = eventController;

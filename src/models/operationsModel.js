@@ -10,14 +10,16 @@ let operations = [
             unique: true,
             autoIncrement: true
         },
-        wallet_id: {
+        walletId: {
             type: DataTypes.BIGINT.UNSIGNED,
-            allowNull: false
+            allowNull: false,
+            field: 'wallet_id'
         },
-        create_at: {
+        createAt: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: Date.now()
+            defaultValue: Date.now(),
+            field: 'create_at'
         },
         type: {
             type: DataTypes.STRING(50),

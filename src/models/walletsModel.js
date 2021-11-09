@@ -1,7 +1,7 @@
 const { DataTypes }= require('sequelize');
 
-let bets = [
-    'bets',
+let wallets = [
+    'wallets',
     {
         id: {
             type: DataTypes.BIGINT.UNSIGNED,
@@ -10,27 +10,23 @@ let bets = [
             unique: true,
             autoIncrement: true
         },
-        user_id: {
+        userId: {
             type: DataTypes.BIGINT.UNSIGNED,
             allowNull: false,
-        },
-        result_id: {
-            type: DataTypes.BIGINT.UNSIGNED,
-            allowNull: false,
+            field: 'user_id'
+            //unique: true
         },
         money: {
             type: DataTypes.FLOAT(8),
-            allowNull: false,
+            defaultValue: 0
         },       
-        create_at: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: Date.now()
-        },
+        info : {
+            type: DataTypes.TEXT
+        }
     },
     {
-        timestamps: false,
+        timestamps: false
     }
 ]
 
-module.exports = bets;
+module.exports = wallets;

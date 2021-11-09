@@ -10,9 +10,10 @@ let events = [
             unique: true,
             autoIncrement: true
         },
-        creator_id: {
+        creatorId: {
             type: DataTypes.BIGINT.UNSIGNED,
             allowNull: true,
+            field: 'creator_id'
         },
         name: {
             type: DataTypes.STRING(100),
@@ -21,17 +22,20 @@ let events = [
         info: {
             type: DataTypes.TEXT
         },
-        is_active: {
+        isActive: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            field: 'is_active'
         },
-        create_at: {
+        createAt: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: Date.now()
+            defaultValue: Date.now(),
+            field: 'create_at'
         },
-        deleted_at: {
+        deletedAt: {
             type: DataTypes.DATE,
+            field: 'deleted_at'
         },
     },
     {

@@ -10,9 +10,10 @@ let results = [
             unique: true,
             autoIncrement: true
         },
-        event_id: {
+        eventId: {
             type: DataTypes.BIGINT.UNSIGNED,
             allowNull: false,
+            field: 'event_id'
         },
         name: {
             type: DataTypes.STRING(100),
@@ -21,9 +22,10 @@ let results = [
         info: {
             type: DataTypes.TEXT
         },
-        is_winner: {
+        isWinner: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            field: 'is_winner'
         },
         coefficient: {
             type: DataTypes.FLOAT(8),
