@@ -50,9 +50,15 @@ let eventController = {
         ev.destroy();
         res.status(200).json(eventId);
       });
+},
 
-    
-}
+  getAllEvents : function(req, res) {
+    console.log("server: starting show all events operation");
+    sequelize.models.events.findAll().then( (evs) => {
+      res.status(200).json(evs);  
+    });
+
+  }
 
 };
 module.exports = eventController;

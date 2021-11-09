@@ -14,6 +14,7 @@ router.use( (req,res,next) =>{
 
 router.post('/create', eventValidator, eventController.addEvent);
 router.post('/delete', eventController.deleteEvent);              // note: add auth middleware
-
+router.get('/', eventController.getAllEvents);
+// :id    ????
 
 module.exports = router;
