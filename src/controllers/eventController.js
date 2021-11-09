@@ -1,4 +1,5 @@
 const express = require('express');
+const events = require('../models/eventsModel');
 const sequelize = require('../models/sequelizeDB');
 //const sequelize = require('../models/sequelize_db');
 const { validationResult } = require('../validators/eventValidator');
@@ -33,6 +34,25 @@ let eventController = {
       }
 
       res.status(201).json(event);
+},
+
+  deleteEvent : function(req,res) {
+    console.log("server: starting delete event operation");
+    let eventId = req.body.id;
+
+    let ev;
+
+     sequelize.models.events.findByPk(eventId).then( (ev) => {
+        if(!ev) { 
+          res.status(404).json(ev);
+          return;
+        }
+        ev.destroy();
+        res.status(200).json(eventId);
+      });
+
+    
 }
+
 };
 module.exports = eventController;
