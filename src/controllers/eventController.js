@@ -33,7 +33,7 @@ let eventController = {
           res.status(500).json(e);
       }
 
-      res.status(201).json(event);
+      res.status(201).json(event);            //note: create response method
 },
 
   deleteEvent : function(req,res) {
@@ -42,7 +42,7 @@ let eventController = {
 
     let ev;
 
-     sequelize.models.events.findByPk(eventId).then( (ev) => {
+     sequelize.models.events.findByPk(eventId).then( (ev) => {    //note: create service for sql methods
         if(!ev) { 
           res.status(404).json(ev);
           return;
@@ -50,11 +50,19 @@ let eventController = {
         ev.destroy();
         res.status(200).json(eventId);
       });
-},
+  },
 
   getAllEvents : function(req, res) {
     console.log("server: starting show all events operation");
     sequelize.models.events.findAll().then( (evs) => {
+      res.status(200).json(evs);  
+    });
+
+  },
+
+  getActiveEvents : function(req, res) {
+    console.log("server: starting show all events operation");
+    sequelize.models.events.findAll({ where : { is_active : true }}).then( (evs) => {
       res.status(200).json(evs);  
     });
 

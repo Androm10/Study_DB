@@ -28,7 +28,7 @@ try {
 
 
 
-users =       sequelize.define(users[0], users[1], users[2]);
+users =       sequelize.define(users[0], users[1], users[2]);                    //note: to another file
 operations =  sequelize.define(operations[0], operations[1], operations[2]);
 wallets =     sequelize.define(wallets[0], wallets[1], wallets[2]);
 userInfo =    sequelize.define(userInfo[0], userInfo[1], userInfo[2]);

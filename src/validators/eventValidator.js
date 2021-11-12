@@ -2,7 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const date = require('date-and-time');
 
-                            //note: format is constant, so he needs to be saved in some file(config)
+                            //note: format is constant, so he needs to be saved in some file(config)   dotenv
 let eventValidator = [
     body('name').notEmpty().isLength( {max: 100}),
     body('deletedAt').notEmpty().custom( (value) =>{

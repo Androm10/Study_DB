@@ -24,5 +24,5 @@ let users = [
         timestamps: false
     }
 ]
-
+                    //note: password handling here
 module.exports = users;
