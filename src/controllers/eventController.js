@@ -1,70 +1,70 @@
 const express = require('express');
-const events = require('../models/eventsModel');
-const sequelize = require('../models/sequelizeDB');
-//const sequelize = require('../models/sequelize_db');
-const { validationResult } = require('../validators/eventValidator');
+const eventService = require('../services/eventService');
+const responseHandler = require('../utils/responseHandler');
 
 let eventController = {
 
- addEvent :  function(req, res){
+  addEvent :   function(req, res){
 
     console.log("server: starting add event operation");
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array() });
-        return  console.log('server: validation fails are: \n \' \n' + 
-                errors.array() + '\n \''  
-         );
-      }
+    
       
-      let event = {
-        name : req.body.name,
-        info : req.body.info ?? '',
-        creatorId : req.body.creatorId,
-        createAt : new Date(),
-        deletedAt : req.body.deletedAt,
-        isActive : req.body.isActive ?? true
-      }
-      try {
-        sequelize.models.events.create(event);
-      } catch(e) {
-          console.log('server: unhandled error:\n ' + e);
-          res.status(500).json(e);
-      }
+    let event = {
+      name : req.body.name,
+      info : req.body.info ?? '',
+      creatorId : req.body.creatorId,
+      createAt : new Date(),
+      deletedAt : req.body.deletedAt,
+      isActive : req.body.isActive ?? true
+    }
+    
+     eventService.addEvent(event)
+     .then( (event) => {
+      responseHandler.sendSuccess(res, event, 200);  
+    })
+    .catch( (error) => {
+      console.log('server: unhandled error:\n ' + error);
+      responseHandler.sendError(res, error);
+    })
 
-      res.status(201).json(event);            //note: create response method
 },
 
-  deleteEvent : function(req,res) {
+  deleteEvent : function(req, res) {
     console.log("server: starting delete event operation");
-    let eventId = req.body.id;
+    let eventId = req.params.id;
+    
+      eventService.deleteEvent(eventId)
+      .then( (eventId) => {
+        responseHandler.sendSuccess(res, eventId, 200);
+      })
+      .catch( (error) => {
+        responseHandler.sendError(res, error);
+      })
 
-    let ev;
-
-     sequelize.models.events.findByPk(eventId).then( (ev) => {    //note: create service for sql methods
-        if(!ev) { 
-          res.status(404).json(ev);
-          return;
-        }
-        ev.destroy();
-        res.status(200).json(eventId);
-      });
   },
 
   getAllEvents : function(req, res) {
     console.log("server: starting show all events operation");
-    sequelize.models.events.findAll().then( (evs) => {
-      res.status(200).json(evs);  
-    });
 
+    eventService.getAllEvents()
+    .then( (events) => {
+      responseHandler.sendSuccess(res, events, 200);
+    })
+    .catch( (error) => {
+      responseHandler.sendError(res, error);
+    });
   },
 
   getActiveEvents : function(req, res) {
-    console.log("server: starting show all events operation");
-    sequelize.models.events.findAll({ where : { is_active : true }}).then( (evs) => {
-      res.status(200).json(evs);  
-    });
+    console.log("server: starting show all active events operation");
+
+    eventService.getActiveEvents()
+    .then( (events) => {
+      responseHandler.sendSuccess(res, events, 200);
+    })
+    .catch( (error) => {
+      responseHandler.sendError(res, error);
+    })
 
   }
 

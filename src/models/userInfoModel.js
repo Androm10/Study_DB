@@ -1,6 +1,7 @@
 const { DataTypes }= require('sequelize');
+const sequelize = require('./sequelizeDB');
 
-let userInfo = [
+let userInfo = sequelize.define(
     'user_info',
     {
         id: {
@@ -32,6 +33,6 @@ let userInfo = [
         timestamps: false,
         freezeTableName: true
     }
-]
+);
 
 module.exports = userInfo;

@@ -1,6 +1,7 @@
 const { DataTypes }= require('sequelize');
+const sequelize = require('./sequelizeDB');
 
-let results = [
+let results = sequelize.define(
     'results',
     {
         id: {
@@ -35,6 +36,6 @@ let results = [
     {
         timestamps: false,
     }
-]
+);
 
 module.exports = results;

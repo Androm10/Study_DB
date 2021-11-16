@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
+const sequelize = require('./sequelizeDB');
 
-let users = [
+let users = sequelize.define(
     'users',
     {
         id: {
@@ -23,6 +24,6 @@ let users = [
     {
         timestamps: false
     }
-]
+);
                     //note: password handling here
 module.exports = users;

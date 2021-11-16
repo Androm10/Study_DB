@@ -1,6 +1,7 @@
 const { DataTypes }= require('sequelize');
+const sequelize = require('./sequelizeDB');
 
-let roles = [
+let roles = sequelize.define(
     'roles',
     {
         id: {
@@ -18,6 +19,6 @@ let roles = [
     {
         timestamps: false
     }
-]
+);
 
 module.exports = roles;
