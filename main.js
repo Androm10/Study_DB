@@ -14,9 +14,9 @@ app.use('/events', eventRouter);
 
 function startServer(){
     try{
-          app.listen(3000, () => {
-            console.log('server: start listening');
-          });
+      app.listen(3000, () => {
+        console.log('server: start listening');
+      });
     }
     catch(error){
         console.log(error);

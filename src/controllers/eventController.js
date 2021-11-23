@@ -5,10 +5,8 @@ const responseHandler = require('../utils/responseHandler');
 let eventController = {
 
   addEvent :   function(req, res){
-
     console.log("server: starting add event operation");
-    
-      
+       
     let event = {
       name : req.body.name,
       info : req.body.info ?? '',
@@ -33,13 +31,13 @@ let eventController = {
     console.log("server: starting delete event operation");
     let eventId = req.params.id;
     
-      eventService.deleteEvent(eventId)
-      .then( (eventId) => {
-        responseHandler.sendSuccess(res, eventId, 200);
-      })
-      .catch( (error) => {
-        responseHandler.sendError(res, error);
-      })
+    eventService.deleteEvent(eventId)
+    .then( (eventId) => {
+      responseHandler.sendSuccess(res, eventId, 200);
+    })
+    .catch( (error) => {
+      responseHandler.sendError(res, error);
+    })
 
   },
 
@@ -53,6 +51,7 @@ let eventController = {
     .catch( (error) => {
       responseHandler.sendError(res, error);
     });
+    
   },
 
   getActiveEvents : function(req, res) {
@@ -64,8 +63,19 @@ let eventController = {
     })
     .catch( (error) => {
       responseHandler.sendError(res, error);
-    })
+    });
+  },
 
+  getCompletedEvents : function(req, res) {
+    console.log("server: starting show all completedEvents");
+
+    eventService.getCompletedEvents()
+    .then( (events) => {
+      responseHandler.sendSuccess(res, events, 200);
+    })
+    .catch( (error) => {
+      responseHandler.sendError(res, error);
+    })
   }
 
 };
