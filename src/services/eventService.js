@@ -1,5 +1,5 @@
 const express = require('express');
-const event = require('../repository/eventRepos');
+const event = require('../repository/eventRepository');
 
 module.exports = eventService = {
 

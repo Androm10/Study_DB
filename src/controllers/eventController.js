@@ -18,7 +18,7 @@ let eventController = {
     
      eventService.addEvent(event)
      .then( (event) => {
-      responseHandler.sendSuccess(res, event, 200);  
+      responseHandler.sendSuccess(res, event, 201);  
     })
     .catch( (error) => {
       console.log('server: unhandled error:\n ' + error);
@@ -59,7 +59,10 @@ let eventController = {
 
     eventService.getActiveEvents()
     .then( (events) => {
-      responseHandler.sendSuccess(res, events, 200);
+      if(events)
+        responseHandler.sendSuccess(res, events, 200);
+      else
+        responseHandler.sendSuccess(res, events, 204); //if events is empty
     })
     .catch( (error) => {
       responseHandler.sendError(res, error);
@@ -71,7 +74,10 @@ let eventController = {
 
     eventService.getCompletedEvents()
     .then( (events) => {
-      responseHandler.sendSuccess(res, events, 200);
+      if(events)
+        responseHandler.sendSuccess(res, events, 200);
+      else
+        responseHandler.sendSuccess(res, events, 204); //if events is empty
     })
     .catch( (error) => {
       responseHandler.sendError(res, error);

@@ -4,10 +4,7 @@ const buildError = require('../utils/buildError');
 module.exports = betRepos = {
     addBet : async function(instance)  {
 
-        let bet = sequelize.models.bets.create(instance)
-        .catch((error) => {            
-            throw(error);
-        });
+        let bet = await sequelize.models.bets.create(instance)
 
         return bet;
 

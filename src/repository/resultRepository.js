@@ -3,55 +3,34 @@ const buildError = require('../utils/buildError');
 
 module.exports = resultRepos = {
    addResult : async function(eventId, instance) {
+
     let event = await sequelize.models.events.findByPk(eventId)
-    .catch ( (error) => {             
-      throw(buildError(500, error));   
-    })
 
     if(!event)  
       throw(buildError(400, 'No such event'));
 
-    return await event.createResult(instance)
-    .catch( (error) => {
-      throw(buildError(500, error));
-    });      
+    return await event.createResult(instance)   
 
   },
 
   getAllResults : async function(eventId) {
 
-    let results = await sequelize.models.events.findByPk(eventId)
-    .then( (event) => {
-
-     return event.getResults()
-      .catch( (error) => {      
-        throw(buildError(500, error));      
-      })
+    let event = await sequelize.models.events.findByPk(eventId)
+    if(!event)
+      throw(buildError(400, 'no such event'));
     
-    })
-    .catch( (error) => {
-
-      throw(buildError(500, error));
-   
-    });
-
-    return results;
+    return event.getResults()
+    
   },
 
   deleteResult :  async function(resultId) {
 
     let result = await sequelize.models.results.findByPk(resultId)
-    .catch( (error) => {             
-      throw(buildError(500, error));   
-    }); 
 
     if(!result)  
       throw(buildError(400, 'No such event'));
 
-    result.destroy()
-    .catch( (error) => {
-      throw(buildError(500, error));
-    });      
+    result.destroy() 
   
     return resultId;
   },
@@ -59,17 +38,11 @@ module.exports = resultRepos = {
   getAssociatedEvent : async function(resultId) {
     
     let result = await sequelize.models.results.findByPk(resultId)
-    .catch( (error) => {
-      throw(buildError(500, error));
-    });
 
     if(!result)  
       throw(buildError(400, 'No such event'));
 
     return result.getEvent()
-    .catch( (error) => {
-      throw(buildError(500, error));
-    })
 
   },
 
@@ -81,9 +54,6 @@ module.exports = resultRepos = {
         eventId : eventId
       }
     })
-    .catch( (error) => {
-      throw(500, error);
-    });
     
    let result = await sequelize.models.results.update(
     { isWinner: true },
@@ -91,9 +61,6 @@ module.exports = resultRepos = {
       id : resultId
       }
     })
-    .catch( (error) => {
-      throw(500, error);
-    });
     
     return result;
   },
@@ -104,9 +71,6 @@ module.exports = resultRepos = {
       where : {
         resultId : resultId
       }
-    })
-    .catch( (error) => {
-      throw(buildError(500, error));
     })
     
   }

@@ -5,10 +5,7 @@ module.exports = eventRepos = {
 
    addEvent : async function(instance){
 
-      let event = sequelize.models.events.create(instance)
-      .catch((error) => {            
-        throw(error);
-      });
+      let event = await sequelize.models.events.create(instance)
 
     return event;
   },
@@ -23,9 +20,6 @@ module.exports = eventRepos = {
     }
     
     event.destroy()
-    .catch( (error) => {
-      throw(buildError(500, error));
-    });
 
     return eventId;   
   },
@@ -33,36 +27,29 @@ module.exports = eventRepos = {
   getAllEvents : async function(){
 
   	return await sequelize.models.events.findAll()
-    .catch( (error) => {
-    	throw(buildError(500, error));
-  	});
 
   },
 
   getActiveEvents : async function(){
 
-    return await sequelize.models.events.findAll({ where : { is_active : true }})
-    .catch( (error) => {
-      throw(buildError(500, error));
-    });
+    return await sequelize.models.events.findAll(
+      { where : 
+        { is_active : true }
+      });
 
   },
 
   getCompletedEvents : async function(){
 
-    return await sequelize.models.events.findAll({where: { is_active : false }})
-    .catch( (error) => {
-      throw(buildError(500, error));      
-    })
+    return await sequelize.models.events.findAll(
+      { where: { is_active : false }
+    });
 
   },
 
   getEventById : async function(eventId){
 
     return await sequelize.models.events.findByPk(eventId)
-    .catch( (error) => {
-      throw(buildError(500, error)); 
-    })
     
   },
 
@@ -73,10 +60,7 @@ module.exports = eventRepos = {
       { where : {
         id : eventId
         }
-      })
-    .catch( (error) => {
-      throw(500, error);
-    });
+      });
     
   },
 

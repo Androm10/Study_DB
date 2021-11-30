@@ -10,7 +10,10 @@ let betController = {
 
     betService.getAllBetsOnEvent(req.params.id)
     .then( (bets) => {
-      responseHandler.sendSuccess(res, bets, 200);
+      if(bets)
+        responseHandler.sendSuccess(res, bets, 200);
+      else
+        responseHandler.sendSuccess(res, bets, 204); //if bets is empty
     })
     .catch( (error) => {
       console.log('server: unhandled error:\n ' + error);
@@ -34,7 +37,7 @@ let betController = {
 
     betService.addBet(bet)
     .then( (bet) => {
-      responseHandler.sendSuccess(res, bet, 200);
+      responseHandler.sendSuccess(res, bet, 201);
     })
     .catch( (error) => {
       console.log('server: unhandled error:\n ' + error);

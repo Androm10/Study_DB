@@ -16,7 +16,7 @@ let resultController = {
 
      resultService.addResult(req.params.id, result)
      .then( (event) => {
-      responseHandler.sendSuccess(res, event, 200);  
+      responseHandler.sendSuccess(res, event, 201);  
     })
     .catch( (error) => {
       console.log('server: unhandled error:\n ' + error);

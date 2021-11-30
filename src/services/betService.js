@@ -1,8 +1,8 @@
 const express = require('express');
-const event = require('../repository/eventRepos');
+const event = require('../repository/eventRepository');
 const buildError = require('../utils/buildError');
-const result = require('../repository/resultRepos');
-const bet = require('../repository/betRepos');
+const result = require('../repository/resultRepository');
+const bet = require('../repository/betRepository');
 
 module.exports = betService = {
 

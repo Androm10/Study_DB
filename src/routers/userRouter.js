@@ -4,13 +4,9 @@ const router = express.Router();
 const walletController = require('../controllers/walletController');
 
 
+const timeOfRequestMiddle = require('../middlewares/timeOfRequestMiddle');           
+router.use(timeOfRequestMiddle);
 
-router.use( (req, res, next) => {
-    console.log('server: request to ' + req.url + 
-    '\tmethod: ' + req.method +
-    '\ttime: ' + new Date);
-    next();
-});
 
 router.post('/:id/wallet/addMoney', walletController.addMoney);
 
