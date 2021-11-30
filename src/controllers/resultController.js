@@ -4,7 +4,7 @@ const responseHandler = require('../utils/responseHandler');
 
 let resultController = {
 
-  addResult :   function(req, res){
+  addResult : function(req, res){
     console.log("server: starting add result operation");
     
     let result = {

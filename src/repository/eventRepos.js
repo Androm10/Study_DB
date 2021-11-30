@@ -5,12 +5,12 @@ module.exports = eventRepos = {
 
    addEvent : async function(instance){
 
-      let obj = sequelize.models.events.create(instance)
+      let event = sequelize.models.events.create(instance)
       .catch((error) => {            
         throw(error);
       });
 
-    return obj;
+    return event;
   },
 
   deleteEvent : async function(eventId){
@@ -32,10 +32,10 @@ module.exports = eventRepos = {
 
   getAllEvents : async function(){
 
-  return await sequelize.models.events.findAll()
+  	return await sequelize.models.events.findAll()
     .catch( (error) => {
-      throw(buildError(500, error));
-    });
+    	throw(buildError(500, error));
+  	});
 
   },
 
@@ -57,21 +57,21 @@ module.exports = eventRepos = {
 
   },
 
-  getEventById : async function(id){
+  getEventById : async function(eventId){
 
-    return await sequelize.models.events.findByPk(id)
+    return await sequelize.models.events.findByPk(eventId)
     .catch( (error) => {
       throw(buildError(500, error)); 
     })
     
   },
 
-  setEventCompleted : async function(id) {
+  setEventCompleted : async function(eventId) {
 
     return await sequelize.models.events.update( 
       { isActive: false },
       { where : {
-        id : id
+        id : eventId
         }
       })
     .catch( (error) => {

@@ -3,11 +3,10 @@ const buildError = require('../utils/buildError');
 
 module.exports = resultRepos = {
    addResult : async function(eventId, instance) {
-
-      let event = await sequelize.models.events.findByPk(eventId)
-      .catch( (error) => {             
-        throw(buildError(500, error));   
-      }); 
+    let event = await sequelize.models.events.findByPk(eventId)
+    .catch ( (error) => {             
+      throw(buildError(500, error));   
+    })
 
     if(!event)  
       throw(buildError(400, 'No such event'));
@@ -20,6 +19,7 @@ module.exports = resultRepos = {
   },
 
   getAllResults : async function(eventId) {
+
     let results = await sequelize.models.events.findByPk(eventId)
     .then( (event) => {
 
@@ -75,8 +75,6 @@ module.exports = resultRepos = {
 
   selectWinningResult : async function(eventId, resultId) {
 
-
-
     sequelize.models.results.update( 
       { isWinner: false },
       { where : {
@@ -100,6 +98,17 @@ module.exports = resultRepos = {
     return result;
   },
 
-  
+  getAllBets : async function(resultId) {
+
+    return await sequelize.models.bets.findAll({
+      where : {
+        resultId : resultId
+      }
+    })
+    .catch( (error) => {
+      throw(buildError(500, error));
+    })
+    
+  }
 
 }

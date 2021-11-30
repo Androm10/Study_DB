@@ -30,11 +30,12 @@ let eventValidator = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            responseHandler.sendError(res, buildError('400', errors.array()));        
+            responseHandler.sendError(res, buildError('400', { errors: errors.array() }));        
             return  console.log('server: validation failed');  
         }
         
         next();
+        
     }
 ];
 

@@ -5,7 +5,7 @@ const buildError = require('../utils/buildError');
 
 module.exports = resultService = {
 
-     addResult : async function(eventId, instance) {
+    addResult : async function(eventId, instance) {
 
         return result.addResult(eventId, instance);
     },
@@ -21,11 +21,14 @@ module.exports = resultService = {
     },
 
     selectWinningResult : async function(id, resultId) {
+
         let ev = await event.getEventById(id);
         let associatedEvent = await result.getAssociatedEvent(resultId);
+        //if event does'nt exists - throw an error
         if(!ev)
             throw(buildError(400, 'No Such event'));
         
+        //if event does'nt matches the event associated to result - throw an error
         if(JSON.stringify(ev) !== JSON.stringify(associatedEvent))
             throw(buildError(400, 'Event does not have requested result'));
         
