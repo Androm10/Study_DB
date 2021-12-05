@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('./sequelizeDB');
+const crypt = require('../utils/crypt');
 
 let users = sequelize.define(
     'users',
@@ -17,7 +18,7 @@ let users = sequelize.define(
             unique: true
         },
         password: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(255),
             allowNull: false
         }       
     },
@@ -25,5 +26,17 @@ let users = sequelize.define(
         timestamps: false
     }
 );
+/*
+users.addHook('beforeCreate', 'hashPassword', async (user, options) => {
+    let hashedPassword = await crypt.cryptPassword(user.password); 
+    user.password = hashedPassword;
+});
+
+users.beforeCreate(async (user, options) => {
+    const hashedPassword = await crypt.cryptPassword(user.password)
+    user.password = hashedPassword
+    console.log("pass::" + user.password);
+  })
+*/
                     //note: password handling here
 module.exports = users;

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+
             /* VALIDATORS */
 const eventValidator = require('../validators/eventValidator');
 const resultValidator = require('../validators/resultValidator');
@@ -14,8 +15,10 @@ const betController = require('../controllers/betController');
             /* MIDDLEWARES */
 const timeOfRequestMiddle = require('../middlewares/timeOfRequestMiddle');
 const validationResultMiddle = require('../middlewares/validationResultMiddle');
-            
+const auth = require('../middlewares/authorize');
+
 router.use(timeOfRequestMiddle);
+router.use(auth);
 
             /* EVENT RELATED */
 router.post('/create', eventValidator, validationResultMiddle, eventController.addEvent);

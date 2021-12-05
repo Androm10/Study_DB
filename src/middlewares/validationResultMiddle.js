@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator');
 const responseHandler = require('../utils/responseHandler');
 
 
-module.exports =    (req, res, next) => {
+module.exports = (req, res, next) => {
 
     const errors = validationResult(req);
 

@@ -4,7 +4,7 @@ module.exports = responseHandler = {
     sendSuccess : function(res, message, status) {
 	
 		res.status(status).json({
-				type: 'success', message: message || 'Success result'
+			type: 'success', message: message || 'Success result'
 		});
 	
 	},

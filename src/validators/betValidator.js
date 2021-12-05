@@ -8,6 +8,7 @@ let betValidator = [
     body('money').notEmpty().custom( value => {
         if(+money <= 0)
             return false;
+            
     })
 ];
 

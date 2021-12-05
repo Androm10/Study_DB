@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users
 (
 id			SERIAL			PRIMARY KEY,
 login		VARCHAR(50)		NOT NULL,
-password	VARCHAR(50)		NOT NULL,
+password	VARCHAR(255)	NOT NULL,
 UNIQUE(login)
 );
 
@@ -31,10 +31,10 @@ CREATE TABLE IF NOT EXISTS  user_info
 (
 id			SERIAL			PRIMARY KEY,
 user_id		BIGINT			UNSIGNED NOT NULL,
-email		VARCHAR(255)	NOT NULL,
+username	VARCHAR(255)	NOT NULL,
 avatar		BLOB,
 about		TEXT,
-UNIQUE(email)	
+UNIQUE(username)	
 );
 
 CREATE TABLE IF NOT EXISTS  roles

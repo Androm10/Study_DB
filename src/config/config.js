@@ -10,12 +10,14 @@ console.log(result.parsed)
 
 module.exports = config = {
     DBConnection : {
-        user : process.env.DB_USER,
-        pass : process.env.DB_PASS,
-        host : process.env.DB_HOST,
-        port : process.env.DB_PORT,
-        name : process.env.DB_NAME
+        user : process.env.DB_USER || "user",
+        pass : process.env.DB_PASS || "password",
+        host : process.env.DB_HOST || "localhost",
+        port : process.env.DB_PORT || "3306",
+        name : process.env.DB_NAME || "DBName"
     },
+    secret: process.env.DB_SECRET || "secret",
+
 
     dateFormat : 'DD/MM/YYYY HH:mm:ss'
 }

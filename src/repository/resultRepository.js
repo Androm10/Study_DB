@@ -2,6 +2,7 @@ const sequelize = require('../database/database');
 const buildError = require('../utils/buildError');
 
 module.exports = resultRepos = {
+  
    addResult : async function(eventId, instance) {
 
     let event = await sequelize.models.events.findByPk(eventId)
@@ -16,6 +17,7 @@ module.exports = resultRepos = {
   getAllResults : async function(eventId) {
 
     let event = await sequelize.models.events.findByPk(eventId)
+
     if(!event)
       throw(buildError(400, 'no such event'));
     

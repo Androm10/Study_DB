@@ -17,7 +17,7 @@ let userInfo = sequelize.define(
             unique: true,
             field: 'user_id'
         },
-        email: {
+        username: {
             type: DataTypes.STRING(255),
             allowNull: false,
             unique: true

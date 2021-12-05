@@ -2,7 +2,9 @@ const sequelize = require('../database/database');
 const buildError = require('../utils/buildError');
 
 module.exports = walletRepository = {
-    addMoney : async function(userId, money)  {
+    
+    addMoney : async function(userId, money) {
+
         let user = await sequelize.models.users.findByPk(userId);
 
         if(!user)
