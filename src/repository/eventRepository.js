@@ -3,66 +3,72 @@ const buildError = require('../utils/buildError');
 
 module.exports = eventRepos = {
 
-   addEvent : async function(instance){
+    getEventById : async function(eventId){
 
-      let event = await sequelize.models.events.create(instance)
-
-    return event;
-  },
-
-  deleteEvent : async function(eventId){
-
-    let event = await this.getEventById(eventId);
-
-    if(!event) { 
-      throw(buildError(404, 'No such event'));
-      return;
-    }
+        return await sequelize.models.events.findByPk(eventId)
     
-    event.destroy()
+    },
 
-    return eventId;   
-  },
+    getAllEvents : async function(){
 
-  getAllEvents : async function(){
+  	    return await sequelize.models.events.findAll()
 
-  	return await sequelize.models.events.findAll()
+    },
 
-  },
+    getActiveEvents : async function(){
 
-  getActiveEvents : async function(){
+        return await sequelize.models.events.findAll(
+            { where : { 
+                is_active : true 
+                }
+            }
+        );
 
-    return await sequelize.models.events.findAll(
-      { where : 
-        { is_active : true }
-      });
+    },
 
-  },
+    getCompletedEvents : async function(){
 
-  getCompletedEvents : async function(){
+        return await sequelize.models.events.findAll(
+            { where: { 
+                is_active : false 
+                }
+            }
+        );
 
-    return await sequelize.models.events.findAll(
-      { where: { is_active : false }
-    });
-
-  },
-
-  getEventById : async function(eventId){
-
-    return await sequelize.models.events.findByPk(eventId)
+    },
     
-  },
+    addEvent : async function(instance){
 
-  setEventCompleted : async function(eventId) {
+        let event = await sequelize.models.events.create(instance)
 
-    return await sequelize.models.events.update( 
-      { isActive: false },
-      { where : {
-        id : eventId
-        }
-      });
+        return event;
+
+    },
+
+    deleteEvent : async function(eventId){
+
+        let event = await this.getEventById(eventId);
+
+        if(!event) 
+            throw(buildError(404, 'No such event'));
+
+        event.destroy()
+
+        return eventId;   
+        
+    },
+
+    setEventCompleted : async function(eventId) {
+
+        return await sequelize.models.events.update( 
+            { isActive: false },
+            { where : {
+                id : eventId
+                }
+            }
+        );
     
-  },
+    },
 
   
 

@@ -21,7 +21,8 @@ module.exports = userRepository = {
             { where : { 
                 login : login
                 }
-            });
+            }
+        );
 
     },
 
@@ -31,16 +32,23 @@ module.exports = userRepository = {
             { where : { 
                 username : username
                 }
-            });
+            }
+        );
         
         if(!userInfo)
             return null;
 
-
         return userInfo.getUser();
     },
 
+    getAllUsers : async function() {
+
+        return await sequelize.models.users.findAll();
+
+    },
+
     addUser : async function(instance, username) {
+
         let hashedPassword = await crypt.cryptPassword(instance.password);
         instance.password = hashedPassword;
 
@@ -48,9 +56,29 @@ module.exports = userRepository = {
 
         user.createInformation( {username : username } );
         user.createWallet();
+        let userRole = await sequelize.models.roles.findOne(
+            { where: {
+                name : "User"
+                } 
+            }
+        );
+
+        user.addRole(userRole);
 
         return user;
-    }
-    
+    },
+
+    deleteAccount : async function(userId) {
+
+        let user = await sequelize.models.users.findByPk(userId);
+        let userInfo = await user.getInformation();
+        let wallet = await user.getWallet();
+
+        await wallet.destroy();  
+        await userInfo.destroy();
+        await user.destroy();
+
+        return user;
+    },    
 
 }

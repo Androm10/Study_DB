@@ -18,16 +18,15 @@ app.use('/user', userRouter);
 app.use('/', authRouter);
 
 
-function startServer(){
-    try{
-      app.listen(3000, () => {
-        console.log('server: start listening');
-      });
+function startServer() {
+    try {
+        app.listen(3000, () => {
+            console.log('server: start listening');
+        });
     }
-    catch(error){
+    catch(error) {
         console.log(error);
     }
-
 }
 
 startServer();

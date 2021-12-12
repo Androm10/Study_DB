@@ -5,7 +5,6 @@ const crypt = require('../utils/crypt');
 const config = require('../config/config');
 const jwt = require('jwt-simple');
 
-
 module.exports = authService = {
 
     logIn : async function(instance) {
@@ -20,8 +19,28 @@ module.exports = authService = {
         let payload = {
             userId: user.id
         }
+
         let token = jwt.encode(payload, config.secret);
+
         return {token: token};    
+    },
+
+    isAdmin : async function(instance) {
+
+        let user = await userRepository.getById(instance.id);
+
+        let roles = await user.getRoles();
+
+        if(!roles)
+            return false;
+
+        for(let role of roles) {
+            if(role.name == "Admin")   
+                return true;
+              
+        }
+
+        return false;
     }
     
 }

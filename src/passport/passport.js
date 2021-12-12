@@ -16,7 +16,7 @@ passport.use(new JWTStrategy(options, function(jwt_payload, done) {
 
     userService.getById(jwt_payload.userId)
     .then( (user) => {
-        if(!user)
+        if(!user) 
             return done(null, false);
 
         return done(null, user);

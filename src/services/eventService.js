@@ -1,31 +1,31 @@
 const express = require('express');
-const event = require('../repository/eventRepository');
+const eventRepository = require('../repository/eventRepository');
 
 module.exports = eventService = {
 
      addEvent : async function(instance) {
 
-        return event.addEvent(instance);
+        return eventRepository.addEvent(instance);
     },
 
     deleteEvent : async function(id) {
 
-        return event.deleteEvent(id);
+        return eventRepository.deleteEvent(id);
     },
 
     getAllEvents : async function() {
 
-        return event.getAllEvents();
+        return eventRepository.getAllEvents();
     },
 
     getActiveEvents : async function() {
 
-        return event.getActiveEvents();
+        return eventRepository.getActiveEvents();
     },
     
     getCompletedEvents : async function(){
         
-        return event.getCompletedEvents();
+        return eventRepository.getCompletedEvents();
     }
     
 }

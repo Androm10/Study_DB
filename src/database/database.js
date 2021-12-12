@@ -21,10 +21,10 @@ wallets.belongsTo( users, { foreignKey: 'userId', as : 'user' });
 users.belongsToMany( roles, { through: 'users_roles', foreignKey: 'userId', otherKey: 'roleId', as: 'roles' });
 roles.belongsToMany( users, { through: 'users_roles', foreignKey: 'roleId', otherKey: 'userId', as: 'users' });
 
-users.hasMany( bets, { foreignKey: 'userId', as: 'createdBets' });
+users.hasMany( bets, { foreignKey: 'userId', as: 'bets' });
 bets.belongsTo( users, { foreignKey: 'userId', as: 'user' });
 
-wallets.hasMany( operations, { foreignKey: 'walletId', as: 'createdOperations' });
+wallets.hasMany( operations, { foreignKey: 'walletId', as: 'operations' });
 operations.belongsTo( wallets, { foreignKey: 'walletId', as: 'wallet' });
 
 results.hasMany( bets, { foreignKey: 'resultId', as: 'onResult' });
