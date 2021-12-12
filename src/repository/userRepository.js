@@ -41,9 +41,13 @@ module.exports = userRepository = {
         return userInfo.getUser();
     },
 
-    getAllUsers : async function() {
+    getAllUsers : async function(limit, offset) {
 
-        return await sequelize.models.users.findAll();
+        return await sequelize.models.users.findAndCountAll(
+            { limit: limit,
+             offset: offset 
+            }
+        );
 
     },
 

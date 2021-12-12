@@ -3,14 +3,20 @@ const buildError = require('../utils/buildError');
 
 module.exports = walletRepository = {
     
-    getOperations : async function(userId) {
+    getOperations : async function(userId, limit, offset) {
         let user = await sequelize.models.users.findByPk(userId);
 
         if(!user)
             throw(buildError(400, 'No such user'));
 
         let wallet = await user.getWallet();
-        let operations = await wallet.getOperations();
+        let operations = sequelize.models.operations.findAndCountAll(
+            { limit: limit,
+            offset: offset,
+            where : {
+                walletId : wallet.id
+                } 
+           });
         
         return operations;
     },

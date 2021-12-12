@@ -13,19 +13,19 @@ module.exports = eventService = {
         return eventRepository.deleteEvent(id);
     },
 
-    getAllEvents : async function() {
+    getAllEvents : async function(limit, offset) {
 
-        return eventRepository.getAllEvents();
+        return eventRepository.getAllEvents(limit, offset);
     },
 
-    getActiveEvents : async function() {
+    getActiveEvents : async function(limit, offset) {
 
-        return eventRepository.getActiveEvents();
+        return eventRepository.getActiveEvents(limit, offset);
     },
     
-    getCompletedEvents : async function(){
+    getCompletedEvents : async function(limit, offset){
         
-        return eventRepository.getCompletedEvents();
+        return eventRepository.getCompletedEvents(limit, offset);
     }
     
 }

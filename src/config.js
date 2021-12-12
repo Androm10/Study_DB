@@ -17,7 +17,11 @@ module.exports = config = {
         name : process.env.DB_NAME || "DBName"
     },
     secret: process.env.DB_SECRET || "secret",
-
+    
+    pagination : {
+        limit : 2,
+        maxLimit : 30
+    },
 
     dateFormat : 'DD/MM/YYYY HH:mm:ss'
 }

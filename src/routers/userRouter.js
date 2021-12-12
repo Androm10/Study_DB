@@ -6,7 +6,7 @@ const userController = require('../controllers/userController');
 
 const operationsValidator = require('../validators/operationsValidator');
 const validate = require('../middlewares/validationResultMiddle');
-
+const paginate = require('../middlewares/paginate');
          
 const auth = require('../middlewares/authorize');
 const isAdmin = require('../middlewares/isAdmin');
@@ -18,12 +18,12 @@ router.use(auth);
 
 router.post('/:id/wallet/addMoney', operationsValidator, validate, walletController.addMoney);
 router.post('/:id/wallet/outputMoney', operationsValidator, validate, walletController.outputMoney);
-router.get('/:id/wallet/operations', walletController.getOperations);
 router.get('/:id/bets', userController.getBets);
-
 router.post('/:id/deleteAccount', userController.deleteAccount);
 
+router.use(paginate);
 router.get('/all', isAdmin, userController.getAllUsers );
+router.get('/:id/wallet/operations', walletController.getOperations);
 
 router.use(errorHandler);
 

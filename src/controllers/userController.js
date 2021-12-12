@@ -7,8 +7,20 @@ let userController = {
     getAllUsers : async function(req, res, next) {
         
         try {
-            let users = await userService.getAllUsers()
-            responseHandler.sendSuccess(res, users, 200); 
+            let users = await userService.getAllUsers(req.query.limit, req.skip);
+            
+            let instanceCount = users.count;
+            let pageCount = Math.ceil(instanceCount / req.query.limit);
+
+            let response = {
+                users : users.rows,
+                count : instanceCount,
+                pages : pageCount,
+                current : req.query.page
+            }
+
+            responseHandler.sendSuccess(res, response, 200); 
+            
         }
         catch(error) {
             next(error);

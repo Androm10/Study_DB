@@ -10,9 +10,9 @@ module.exports = userService = {
     
     },
 
-    getAllUsers : async function() {
+    getAllUsers : async function(limit, offset) {
         
-        return userRepository.getAllUsers();
+        return userRepository.getAllUsers(limit, offset);
         
     },
 

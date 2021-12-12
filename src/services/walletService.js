@@ -40,9 +40,9 @@ module.exports = walletService = {
     
     },
 
-    getOperations : async function(userId) {
+    getOperations : async function(userId, limit, offset) {
 
-        return walletRepository.getOperations(userId);
+        return walletRepository.getOperations(userId, limit, offset);
         
     }
 }

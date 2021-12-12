@@ -17,26 +17,28 @@ const validate = require('../middlewares/validationResultMiddle');
 const auth = require('../middlewares/authorize');
 const isAdmin = require('../middlewares/isAdmin');
 const errorHandler = require('../middlewares/errorHandler');
+const paginate = require('../middlewares/paginate');
 
 
 
 router.use(auth);
 
-            /* EVENT RELATED */
 router.post('/create', isAdmin, eventValidator, validate, eventController.addEvent);
-router.post('/:id/delete', isAdmin, eventController.deleteEvent);              // note: add auth middleware
-router.get('/', eventController.getAllEvents);
-router.get('/active', eventController.getActiveEvents);
-router.get('/completed', eventController.getCompletedEvents);
+router.post('/:id/delete', isAdmin, eventController.deleteEvent); 
 
-            /* RESULT RELATED */
+
 router.post('/:id/results/create', isAdmin, resultValidator, validate, resultController.addResult);
 router.get('/:id/results', resultController.getAllResults);
 router.post('/:id/results/:resultId/setWinner', isAdmin, resultController.selectWinningResult);
 
-            /* BET RELATED */
+
 router.get('/:id/bets', isAdmin , betController.getAllBetsOnEvent);
 router.post('/:id/results/:resultId/addBet', operationValidator, validate, betController.addBet);
+
+router.use(paginate);
+router.get('/', eventController.getAllEvents);
+router.get('/active', eventController.getActiveEvents);
+router.get('/completed', eventController.getCompletedEvents);
 
 router.use(errorHandler);
 

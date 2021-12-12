@@ -9,31 +9,36 @@ module.exports = eventRepos = {
     
     },
 
-    getAllEvents : async function(){
+    getAllEvents : async function(limit, offset) {
 
-  	    return await sequelize.models.events.findAll()
+  	    return await sequelize.models.events.findAndCountAll(
+            { limit: limit,
+            offset: offset 
+           });
 
     },
 
-    getActiveEvents : async function(){
+    getActiveEvents : async function(limit, offset){
 
-        return await sequelize.models.events.findAll(
-            { where : { 
+        return await sequelize.models.events.findAndCountAll(
+            { limit: limit,
+            offset: offset,    
+            where : { 
                 is_active : true 
                 }
-            }
-        );
+            });
 
     },
 
-    getCompletedEvents : async function(){
+    getCompletedEvents : async function(limit, offset){
 
-        return await sequelize.models.events.findAll(
-            { where: { 
+        return await sequelize.models.events.findAndCountAll(
+            { limit: limit,
+            offset: offset, 
+            where: { 
                 is_active : false 
                 }
-            }
-        );
+            });
 
     },
     

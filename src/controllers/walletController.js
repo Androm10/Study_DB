@@ -32,8 +32,19 @@ let walletController = {
     getOperations : async function(req, res, next) {
 
         try {
-            let operations = await walletService.getOperations(req.user.id);
-            responseHandler.sendSuccess(res, operations, 200);
+            let operations = await walletService.getOperations(req.user.id, req.query.limit, req.skip);
+
+            let instanceCount = operations.count;
+            let pageCount = Math.ceil(instanceCount / req.query.limit);
+
+            let response = {
+                operations : operations.rows,
+                count : instanceCount,
+                pages : pageCount,
+                current : req.query.page
+            }
+
+            responseHandler.sendSuccess(res, response, 200);
         }
         catch(error) {
             next(error);

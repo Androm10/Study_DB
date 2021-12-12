@@ -39,8 +39,19 @@ let eventController = {
     getAllEvents : async function(req, res, next) {
 
         try {
-            let events = await eventService.getAllEvents();
-            responseHandler.sendSuccess(res, events, 200);
+            let events = await eventService.getAllEvents(req.query.limit, req.skip);
+
+            let instanceCount = events.count;
+            let pageCount = Math.ceil(instanceCount / req.query.limit);
+
+            let response = {
+                events : events.rows,
+                count : instanceCount,
+                pages : pageCount,
+                current : req.query.page
+            }
+
+            responseHandler.sendSuccess(res, response, 200); 
         }
         catch(error) {
             next(error);
@@ -51,8 +62,19 @@ let eventController = {
     getActiveEvents : async function(req, res, next) {
 
         try {
-            let events = await eventService.getActiveEvents();
-            responseHandler.sendSuccess(res, events, 200);
+            let events = await eventService.getActiveEvents(req.query.limit, req.skip);
+
+            let instanceCount = events.count;
+            let pageCount = Math.ceil(instanceCount / req.query.limit);
+
+            let response = {
+                events : events.rows,
+                count : instanceCount,
+                pages : pageCount,
+                current : req.query.page
+            }
+
+            responseHandler.sendSuccess(res, response, 200);
         }
         catch(error) {
             next(error);
@@ -63,8 +85,19 @@ let eventController = {
     getCompletedEvents : async function(req, res, next) {
 
        try {
-            let events = await eventService.getCompletedEvents()
-            responseHandler.sendSuccess(res, events, 200);
+            let events = await eventService.getCompletedEvents(req.query.limit, req.skip);
+
+            let instanceCount = events.count;
+            let pageCount = Math.ceil(instanceCount / req.query.limit);
+
+            let response = {
+                events : events.rows,
+                count : instanceCount,
+                pages : pageCount,
+                current : req.query.page
+            }
+
+            responseHandler.sendSuccess(res, response, 200);
        }
         catch(error) {
             next(error);
