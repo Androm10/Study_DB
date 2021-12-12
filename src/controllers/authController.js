@@ -14,9 +14,9 @@ let authController = {
             login : req.body.login,
             password : req.body.password
         }
+        
         try {
             let token = await authService.logIn(user);
-
             responseHandler.sendSuccess(res, token, 200);
         }
         catch(error) {

@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 
-const passport = require('./src/passport/passport');
+const passport = require('./src/passport');
 
 const eventRouter = require('./src/routers/eventRouter');
 const userRouter = require('./src/routers/userRouter');
@@ -16,6 +16,7 @@ app.use(passport.initialize());
 app.use('/events', eventRouter);
 app.use('/user', userRouter);
 app.use('/', authRouter);
+
 
 
 function startServer() {

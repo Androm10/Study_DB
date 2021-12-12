@@ -13,13 +13,13 @@ const resultController = require('../controllers/resultController');
 const betController = require('../controllers/betController');
 
             /* MIDDLEWARES */
-const timeOfRequestMiddle = require('../middlewares/timeOfRequestMiddle');
 const validate = require('../middlewares/validationResultMiddle');
 const auth = require('../middlewares/authorize');
 const { isAdmin } = require('../middlewares/isAdmin');
+//const errorHandler = require('../middlewares/errorHandler');
 
 
-router.use(timeOfRequestMiddle);
+
 router.use(auth);
 
             /* EVENT RELATED */
@@ -37,5 +37,7 @@ router.post('/:id/results/:resultId/setWinner', isAdmin, resultController.select
             /* BET RELATED */
 router.get('/:id/bets', isAdmin , betController.getAllBetsOnEvent);
 router.post('/:id/results/:resultId/addBet', operationValidator, validate, betController.addBet);
+
+//router.use(errorHandler);
 
 module.exports = router;

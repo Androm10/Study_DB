@@ -1,6 +1,6 @@
 const express = require('express');
 const { body } = require('express-validator');
-const config = require('../config/config');
+const config = require('../config');
 const date = require('date-and-time');
 
 let eventValidator = [

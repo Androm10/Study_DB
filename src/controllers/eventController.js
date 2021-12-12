@@ -4,9 +4,8 @@ const responseHandler = require('../utils/responseHandler');
 
 let eventController = {
 
-    addEvent :   function(req, res){
-        console.log("server: starting add event operation");
-       
+    addEvent : async function(req, res, next){
+
         let event = {
             name : req.body.name,
             info : req.body.info ?? '',
@@ -15,73 +14,61 @@ let eventController = {
             deletedAt : req.body.deletedAt,
             isActive : req.body.isActive ?? true
         }
-    
-        eventService.addEvent(event)
-        .then( (event) => {
-            responseHandler.sendSuccess(res, event, 201);  
-        })
-        .catch( (error) => {
-            console.log('server: unhandled error:\n ' + error);
-            responseHandler.sendError(res, error);
-        })
+        try {
+            let result = await eventService.addEvent(event);
+            responseHandler.sendSuccess(res, result, 201);
+        }
+        catch(error) {
+           next(error);
+        }
 
     },
 
-    deleteEvent : function(req, res) {
-        console.log("server: starting delete event operation");
-        let eventId = req.params.id;
-    
-        eventService.deleteEvent(eventId)
-        .then( (eventId) => {
+    deleteEvent : async function(req, res, next) {
+
+        try {
+            let eventId = await eventService.deleteEvent(req.params.id);
             responseHandler.sendSuccess(res, eventId, 200);
-        })
-        .catch( (error) => {
-            responseHandler.sendError(res, error);
-        })
+        }
+        catch(error) {
+            next(error);
+        }
 
     },
 
-    getAllEvents : function(req, res) {
-        console.log("server: starting show all events operation");
+    getAllEvents : async function(req, res, next) {
 
-        eventService.getAllEvents()
-        .then( (events) => {
+        try {
+            let events = await eventService.getAllEvents();
             responseHandler.sendSuccess(res, events, 200);
-        })
-        .catch( (error) => {
-            responseHandler.sendError(res, error);
-        });
+        }
+        catch(error) {
+            next(error);
+        }
     
     },
 
-    getActiveEvents : function(req, res) {
-        console.log("server: starting show all active events operation");
+    getActiveEvents : async function(req, res, next) {
 
-        eventService.getActiveEvents()
-        .then( (events) => {
-            if(events)
-                responseHandler.sendSuccess(res, events, 200);
-            else
-                responseHandler.sendSuccess(res, events, 204); //if events is empty
-        })
-        .catch( (error) => {
-            responseHandler.sendError(res, error);
-        });
+        try {
+            let events = await eventService.getActiveEvents();
+            responseHandler.sendSuccess(res, events, 200);
+        }
+        catch(error) {
+            next(error);
+        }
+
     },
 
-    getCompletedEvents : function(req, res) {
-        console.log("server: starting show all completedEvents");
+    getCompletedEvents : async function(req, res, next) {
 
-        eventService.getCompletedEvents()
-        .then( (events) => {
-            if(events)
-                responseHandler.sendSuccess(res, events, 200);
-            else
-                responseHandler.sendSuccess(res, events, 204); //if events is empty
-        })
-        .catch( (error) => {
-            responseHandler.sendError(res, error);
-        })
+       try {
+            let events = await eventService.getCompletedEvents()
+            responseHandler.sendSuccess(res, events, 200);
+       }
+        catch(error) {
+            next(error);
+        }
     }
 
 };

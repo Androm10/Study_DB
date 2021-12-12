@@ -1,4 +1,4 @@
-const sequelize = require('../database/database');
+const sequelize = require('../database');
 const buildError = require('../utils/buildError');
 
 module.exports = walletRepository = {

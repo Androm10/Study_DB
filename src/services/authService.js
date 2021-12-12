@@ -2,7 +2,7 @@ const express = require('express');
 const userRepository = require('../repository/userRepository');
 const buildError = require('../utils/buildError');
 const crypt = require('../utils/crypt');
-const config = require('../config/config');
+const config = require('../config');
 const jwt = require('jwt-simple');
 
 module.exports = authService = {

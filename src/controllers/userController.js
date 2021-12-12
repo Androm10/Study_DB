@@ -4,54 +4,50 @@ const responseHandler = require('../utils/responseHandler');
 
 let userController = {
 
-    getAllUsers : function(req, res) {
-        console.log("server: starting add user operation");
-
-        userService.getAllUsers()
-         .then( (users) => {
-            responseHandler.sendSuccess(res, users, 200);  
-        })
-        .catch( (error) => {
-            console.log('server: unhandled error:\n ' + error);
-            responseHandler.sendError(res, error);
-        });
+    getAllUsers : async function(req, res, next) {
+        
+        try {
+            let users = await userService.getAllUsers()
+            responseHandler.sendSuccess(res, users, 200); 
+        }
+        catch(error) {
+            next(error);
+        }
 
     },
 
 
-    addUser : function(req, res) {
-        console.log("server: starting add user operation");
+    addUser : async function(req, res, next) {
         
         let user = {
             login : req.body.login,
             password : req.body.password
         }
 
-         userService.addUser(user, req.body.username)
-         .then( (user) => {
-            responseHandler.sendSuccess(res, user, 201);  
-        })
-        .catch( (error) => {
-            console.log('server: unhandled error:\n ' + error);
-            responseHandler.sendError(res, error);
-        })
+        try {
+            let result = await userService.addUser(user, req.body.username)
+            responseHandler.sendSuccess(res, result, 201);
+        }
+        catch(error) {
+            next(error);
+        }
 
     },
 
-    deleteAccount : function(req, res) {
+    deleteAccount : async function(req, res, next) {
         
-        userService.deleteAccount(req.user.id)
-        .then( (user) => {
-            responseHandler.sendSuccess(res, user, 200);  
-        })
-        .catch( (error) => {
-            console.log('server: unhandled error:\n ' + error);
-            responseHandler.sendError(res, error);
-        });
+        try {
+            let user = await userService.deleteAccount(req.user.id)
+            responseHandler.sendSuccess(res, user, 200);
+        }
+        catch(error) {
+            next(error);
+        }
 
     },
 
     getBets : async function(req, res, next) {
+        
         try {
             let bets = await userService.getBets(req.user.id);
             responseHandler.sendSuccess(res, bets, 200);

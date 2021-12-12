@@ -1,11 +1,11 @@
-const sequelize = require('../database/database');
+const sequelize = require('../database');
 const buildError = require('../utils/buildError');
 
 module.exports = betRepos = {
     
     getById : async function(betId) {
 
-        let bet = sequelize.models.bets.findByPk(betId);
+        let bet = await sequelize.models.bets.findByPk(betId);
 
         if(!bet)
             throw(buildError(400, 'no such bet'));

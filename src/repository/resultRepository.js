@@ -1,4 +1,4 @@
-const sequelize = require('../database/database');
+const sequelize = require('../database');
 const buildError = require('../utils/buildError');
 
 module.exports = resultRepos = {
@@ -18,7 +18,7 @@ module.exports = resultRepos = {
         if(!event)  
             throw(buildError(400, 'No such event'));
 
-        return await event.createResult(instance)   
+        return await event.createResult(instance);   
 
     },
 

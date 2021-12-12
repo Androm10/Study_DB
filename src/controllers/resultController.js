@@ -4,10 +4,8 @@ const responseHandler = require('../utils/responseHandler');
 
 let resultController = {
 
-    addResult : function(req, res) {
+    addResult : async function(req, res, next) {
 
-        console.log("server: starting add result operation");
-    
         let result = {
             name : req.body.name,
             info : req.body.info ?? '',
@@ -15,58 +13,48 @@ let resultController = {
             coefficient : req.body.coefficient,
         }
 
-        resultService.addResult(req.params.id, result)
-        .then( (event) => {
-            responseHandler.sendSuccess(res, event, 201);  
-        })
-        .catch( (error) => {
-            console.log('server: unhandled error:\n ' + error);
-            responseHandler.sendError(res, error);
-        })
+        try {
+            let createdResult = await resultService.addResult(req.params.id, result)
+            responseHandler.sendSuccess(res, createdResult, 201);
+        }
+        catch(error) {
+            next(error);
+        }
 
     },
 
-    getAllResults : function(req, res) {
-
-        console.log("server: starting show all results operation");
-
-        resultService.getAllResults(req.params.id)
-        .then( (results) => {
-            responseHandler.sendSuccess(res, results, 200);
-        })
-        .catch( (error) => {
-            console.log('server: unhandled error:\n ' + error);
-            responseHandler.sendError(res, error);
-        });
-
-    },
-
-    deleteResult : function(req, res) {
-
-        console.log("server: starting delete result operation");
-
-        resultService.deleteResult(req.params.id)
-        .then( (resultId) => {
-            responseHandler.sendSuccess(res, resultId, 200);
-        })
-        .catch( (error) => {
-            console.log('server: unhandled error:\n ' + error);
-        responseHandler.sendError(res, error);
-        });
-    },
-
-    selectWinningResult : function(req, res) {
+    getAllResults : async function(req, res, next) {
         
-        console.log("server: starting select winning result operation");
+        try {
+            let results = await resultService.getAllResults(req.params.id)
+            responseHandler.sendSuccess(res, results, 200);
+        }
+        catch(error) {
+            next(error);
+        }
 
-        resultService.selectWinningResult(req.params.id, req.params.resultId)
-        .then( (result) => {
+    },
+
+    deleteResult : async function(req, res, next) {
+
+        try {
+            let resultId = await resultService.deleteResult(req.params.id)
+            responseHandler.sendSuccess(res, resultId, 200);
+        }
+        catch(error) {
+            next(error);
+        }
+    },
+
+    selectWinningResult : async function(req, res, next) {
+        
+        try {
+            let result = await resultService.selectWinningResult(req.params.id, req.params.resultId)
             responseHandler.sendSuccess(res, result, 200);
-        })
-        .catch( (error) => {
-            console.log('server: unhandled error:\n ' + error);
-            responseHandler.sendError(res, error);
-        });
+        }
+        catch(error) {
+            next(error);
+        }
 
     }
 
