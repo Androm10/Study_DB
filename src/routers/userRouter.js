@@ -9,8 +9,8 @@ const validate = require('../middlewares/validationResultMiddle');
 
          
 const auth = require('../middlewares/authorize');
-const { isAdmin } = require('../middlewares/isAdmin');
-//const errorHandler = require('../middlewares/errorHandler');
+const isAdmin = require('../middlewares/isAdmin');
+const errorHandler = require('../middlewares/errorHandler');
 
 
 
@@ -25,6 +25,6 @@ router.post('/:id/deleteAccount', userController.deleteAccount);
 
 router.get('/all', isAdmin, userController.getAllUsers );
 
-//router.use(errorHandler);
+router.use(errorHandler);
 
 module.exports = router;
