@@ -21,9 +21,13 @@ router.post('/:id/wallet/outputMoney', operationsValidator, validate, walletCont
 router.get('/:id/bets', userController.getBets);
 router.post('/:id/deleteAccount', userController.deleteAccount);
 
+router.get('/mostPoints', userController.mostPoints);
+
+
 router.use(paginate);
 router.get('/all', isAdmin, userController.getAllUsers );
 router.get('/:id/wallet/operations', walletController.getOperations);
+
 
 router.use(errorHandler);
 

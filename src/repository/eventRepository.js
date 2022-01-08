@@ -1,5 +1,7 @@
+const { QueryTypes } = require('sequelize');
 const sequelize = require('../database');
 const buildError = require('../utils/buildError');
+const fs = require('fs');
 
 module.exports = eventRepos = {
 
@@ -52,15 +54,27 @@ module.exports = eventRepos = {
 
     deleteEvent : async function(eventId){
 
-        let event = await this.getEventById(eventId);
+        const t = await sequelize.transaction();
+        try {
+            let event = await sequelize.models.events.findByPk(eventId);
 
-        if(!event) 
-            throw(buildError(404, 'No such event'));
+            if(!event) 
+                throw(buildError(404, 'No such event'));
 
-        event.destroy()
+            if(event.image) {
+                let pathToImage = event.image;
+                fs.unlinkSync(pathToImage);
+            }
 
-        return eventId;   
-        
+            await event.destroy({transaction : t});
+
+            await t.commit();  
+        }
+        catch (error) {
+            await t.rollback();
+            throw(error);
+        }
+        return eventId; 
     },
 
     setEventCompleted : async function(eventId) {
@@ -75,6 +89,22 @@ module.exports = eventRepos = {
     
     },
 
-  
+    mostLosses : async function() {
+        return await sequelize.query( 'SELECT e.name, SUM(b.money) as losts' +
+		' FROM events e' +
+        ' LEFT JOIN results r' +
+        ' ON r.event_id = e.id' +
+		' JOIN bets b' +
+        ' ON r.id = b.result_id' +
+		' WHERE e.is_active = false' +
+        ' AND r.is_winner = false' +
+        ' ORDER BY losts DESC' +
+        ' LIMIT 1' 
+        , 
+        {
+            type: QueryTypes.SELECT
+        });
+    }
+
 
 }

@@ -1,6 +1,7 @@
 const express = require('express');
 const eventService = require('../services/eventService');
 const responseHandler = require('../utils/responseHandler');
+const fs = require('fs');
 
 let eventController = {
 
@@ -15,6 +16,7 @@ let eventController = {
             isActive : req.body.isActive ?? true
         }
         try {
+           
             let result = await eventService.addEvent(event);
             responseHandler.sendSuccess(res, result, 201);
         }
@@ -24,9 +26,25 @@ let eventController = {
 
     },
 
+    uploadImage : async function(req, res, next) {
+        try {
+            
+            let pathToImage = '../images/' + req.files.eventImage.name;
+            req.files.eventImage.mv(pathToImage);
+
+            let result = await eventService.uploadImage(req.params.id, pathToImage);
+
+            responseHandler.sendSuccess(res, result, 200);
+        }
+        catch(error) {
+            next(error);
+        }
+    },
+
     deleteEvent : async function(req, res, next) {
 
         try {
+            
             let eventId = await eventService.deleteEvent(req.params.id);
             responseHandler.sendSuccess(res, eventId, 200);
         }
@@ -34,6 +52,17 @@ let eventController = {
             next(error);
         }
 
+    },
+
+    deleteImage : async function(req, res, next) {
+        try {
+            
+            let result = await eventService.deleteImage(req.params.id);
+            responseHandler.sendSuccess(res, result, 200);
+        }
+        catch(error) {
+            next(error);
+        }
     },
 
     getAllEvents : async function(req, res, next) {
@@ -102,7 +131,21 @@ let eventController = {
         catch(error) {
             next(error);
         }
+    },
+
+    mostLosses : async function(req, res,next) {
+
+        try{
+            let event = await eventService.mostLosses();
+            responseHandler.sendSuccess(res,event,200);
+        }
+        catch(error){
+            next(error);
+        }
+
     }
+
 
 };
 module.exports = eventController;
+

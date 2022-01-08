@@ -40,6 +40,12 @@ module.exports = userService = {
         let bets = await user.getBets();
 
         return bets;
+    },
+
+    mostPoints : async function(date) {
+        
+        let user = await userRepository.mostPoints(date);
+        return user;
     }
 
     

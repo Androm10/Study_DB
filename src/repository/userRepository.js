@@ -1,3 +1,4 @@
+const { QueryTypes } = require('sequelize');
 const sequelize = require('../database');
 const buildError = require('../utils/buildError');
 const crypt = require('../utils/crypt');
@@ -83,6 +84,32 @@ module.exports = userRepository = {
         await user.destroy();
 
         return user;
-    },    
+    },
+    
+    mostPoints : async function(date) {
+        let year = (new Date(date)).getFullYear();
+        let month = (new Date(date)).getMonth() + 1;
+
+        let user = await sequelize.query(
+        'SELECT u.login, u_i.username, SUM(b.money) as points' +
+        ' FROM users u' + 
+        ' JOIN user_info u_i ' + 
+        ' ON u.id = u_i.user_id' + 
+        ' JOIN bets b' + 
+        ' ON b.user_id = u.id' + 
+        ' JOIN results r' + 
+        ' ON r.id = b.result_id' +
+        ' WHERE r.is_winner = true' + 
+        ' GROUP BY b.create_at HAVING MONTH(b.create_at) = ?' +
+        ' AND YEAR(b.create_at) = ?' +
+        ' ORDER BY points DESC' + 
+        ' LIMIT 1', 
+        {
+            replacements: [month, year],
+            type : QueryTypes.SELECT
+        });
+
+        return user;
+    }
 
 }

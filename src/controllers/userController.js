@@ -67,7 +67,24 @@ let userController = {
         catch(error) {
             next(error);
         }
+    },
+
+    mostPoints : async function(req,res,next) {
+
+        let date = req.query.date;
+        if(!date)
+            date = new Date();
+
+        try {
+            let user = await userService.mostPoints(date);
+            responseHandler.sendSuccess(res, user, 200);
+        }
+        catch(error) {
+            next(error);
+        }
+
     }
+
   
 };
 module.exports = userController;

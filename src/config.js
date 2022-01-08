@@ -13,7 +13,7 @@ module.exports = config = {
         user : process.env.DB_USER || "user",
         pass : process.env.DB_PASS || "password",
         host : process.env.DB_HOST || "localhost",
-        port : process.env.DB_PORT || "3306",
+        port : process.env.DB_PORT || "3307",
         name : process.env.DB_NAME || "DBName"
     },
     secret: process.env.DB_SECRET || "secret",

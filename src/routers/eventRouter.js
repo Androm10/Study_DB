@@ -23,9 +23,11 @@ const paginate = require('../middlewares/paginate');
 
 router.use(auth);
 
+router.get('/mostLosses', eventController.mostLosses);
 router.post('/create', isAdmin, eventValidator, validate, eventController.addEvent);
-router.post('/:id/delete', isAdmin, eventController.deleteEvent); 
-
+router.post('/:id/delete', isAdmin, eventController.deleteEvent);
+router.post('/:id/uploadImage',  eventController.uploadImage); 
+router.post('/:id/deleteImage',  eventController.deleteImage); 
 
 router.post('/:id/results/create', isAdmin, resultValidator, validate, resultController.addResult);
 router.get('/:id/results', resultController.getAllResults);

@@ -28,6 +28,11 @@ let events = sequelize.define(
             defaultValue: false,
             field: 'is_active'
         },
+        image: {
+            type: DataTypes.STRING,
+            defaultValue: "",
+            field: 'image'
+        },
         createAt: {
             type: DataTypes.DATE,
             allowNull: false,

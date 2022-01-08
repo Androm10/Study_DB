@@ -70,7 +70,8 @@ info		TEXT,
 creator_id	BIGINT			UNSIGNED,
 create_at	TIMESTAMP		NOT NULL,
 deleted_at	TIMESTAMP,
-is_active	BOOLEAN			DEFAULT TRUE
+is_active	BOOLEAN			DEFAULT TRUE,
+image		VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS  users_roles
