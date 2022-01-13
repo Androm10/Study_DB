@@ -1,3 +1,5 @@
+const logger = require('./mongodb');
+
 let result = require('dotenv').config();
 
 if (result.error) {
@@ -23,5 +25,25 @@ module.exports = config = {
         maxLimit : 30
     },
 
-    dateFormat : 'DD/MM/YYYY HH:mm:ss'
+    dateFormat : 'DD/MM/YYYY HH:mm:ss',
+
+    hooks : {
+        afterCreate : (record, options) => {
+            let log = {
+                type : 'afterCreate',
+                model : JSON.stringify(record),
+                date : Date.now()
+            }
+            logger.createDbLog(log);
+        },
+
+        beforeDestroy : (record, options) => {
+            let log = {
+                type : 'afterDestroy',
+                model : JSON.stringify(record),
+                date : Date.now()
+            }
+            logger.createDbLog(log);
+        }
+    }
 }

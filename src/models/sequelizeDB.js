@@ -4,7 +4,10 @@ const config = require('../config');
 const options = {
     host: config.DBConnection.host,
     port: config.DBConnection.port,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    define : {
+        hooks : config.hooks
+    }
 }
 
 const sequelize = new Sequelize(

@@ -18,10 +18,11 @@ const auth = require('../middlewares/authorize');
 const isAdmin = require('../middlewares/isAdmin');
 const errorHandler = require('../middlewares/errorHandler');
 const paginate = require('../middlewares/paginate');
-
+const httpLog = require('../middlewares/httpLog');
 
 
 router.use(auth);
+router.use(httpLog);
 
 router.get('/mostLosses', eventController.mostLosses);
 router.post('/create', isAdmin, eventValidator, validate, eventController.addEvent);
