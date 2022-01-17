@@ -1,4 +1,4 @@
-const sequelize = require("./models/sequelizeDB");
+const sequelize = require("./models");
 
 const user         = require("./models/user");
 const userInfo     = require("./models/userInfo");
@@ -10,7 +10,6 @@ const bet          = require("./models/bet");
 const result       = require("./models/result");
 const event        = require("./models/event");
     
-
 
 user.hasOne( userInfo, { foreignKey: 'userId', as: 'information' });
 userInfo.belongsTo( user, { foreignKey: 'userId', as: 'user' });

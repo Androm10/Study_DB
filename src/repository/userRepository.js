@@ -44,11 +44,18 @@ module.exports = userRepository = {
 
     getAllUsers : async function(limit, offset) {
 
-        return await sequelize.models.users.findAndCountAll(
-            { limit: limit,
-             offset: offset 
-            }
-        );
+        if(limit || offset) {
+            let res = await sequelize.models.users.findAndCountAll(
+                { limit: limit,
+                offset: offset 
+                }
+            );
+            return res;
+        }
+        else {
+            let res = await sequelize.models.users.findAll();
+            return res;
+        }
 
     },
 
@@ -85,7 +92,18 @@ module.exports = userRepository = {
 
         return user;
     },
-    
+
+    getLastBet : async function(userId) {
+
+        let bet = await sequelize.models.bets.findOne({
+            order : [
+                ['create_at', 'DESC']
+            ]
+        });
+
+        return bet;
+    },
+
     mostPoints : async function(date) {
         let year = (new Date(date)).getFullYear();
         let month = (new Date(date)).getMonth() + 1;

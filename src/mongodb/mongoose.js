@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-
+const connection = require('../config').mongodb;
 
 connect();
 
 async function connect() {
     try {
-        await mongoose.connect('mongodb+srv://root:1111@study.ail2r.mongodb.net/nostralog?retryWrites=true&w=majority');
+        await mongoose.connect(connection);
         console.log("server: connection to mongodb success");
     }
     catch(error) {

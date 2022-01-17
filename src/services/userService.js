@@ -37,6 +37,7 @@ module.exports = userService = {
     getBets : async function(userId) {
         
         let user = await userRepository.getById(userId);
+        
         let bets = await user.getBets();
 
         return bets;
@@ -45,7 +46,20 @@ module.exports = userService = {
     mostPoints : async function(date) {
         
         let user = await userRepository.mostPoints(date);
+
         return user;
+    },
+
+    getLastBet : async function(userId) {
+
+        let user = await userRepository.getById(userId);
+        
+        if(!user)
+            throw(buildError(400, 'no such user'));
+
+        let bet = await userRepository.getLastBet(userId);
+        
+        return bet;
     }
 
     

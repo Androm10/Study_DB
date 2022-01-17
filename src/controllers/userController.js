@@ -1,6 +1,11 @@
 const express = require('express');
+
+const { sendToMailer } = require('../amqp');
+const { mailTypes } = require('../config');
+
 const userService = require('../services/userService');
 const responseHandler = require('../utils/responseHandler');
+
 
 let userController = {
 
@@ -37,7 +42,16 @@ let userController = {
         }
 
         try {
-            let result = await userService.addUser(user, req.body.username)
+            let result = await userService.addUser(user, req.body.username);
+
+            let mail = {
+                email : user.login, 
+                nickname : req.body.username,
+                type : mailTypes.meetMail
+            }
+            //send data to mailer
+            sendToMailer(JSON.stringify(mail));
+
             responseHandler.sendSuccess(res, result, 201);
         }
         catch(error) {
@@ -47,9 +61,20 @@ let userController = {
     },
 
     deleteAccount : async function(req, res, next) {
-        
+
         try {
+            
+            let mail = {
+                email : req.user.login, 
+                nickname : req.body.username,
+                type : mailTypes.deleteAccMail
+            }
+
             let user = await userService.deleteAccount(req.user.id)
+            
+            //send data to mailer
+            sendToMailer(JSON.stringify(mail));
+
             responseHandler.sendSuccess(res, user, 200);
         }
         catch(error) {

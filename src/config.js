@@ -1,5 +1,3 @@
-const logger = require('./mongodb');
-
 let result = require('dotenv').config();
 
 if (result.error) {
@@ -18,32 +16,20 @@ module.exports = config = {
         port : process.env.DB_PORT || "3307",
         name : process.env.DB_NAME || "DBName"
     },
+    mongodb : process.env.MONGO_CONN || "mongodb+srv://root:1@cluster0.ail2r.mongodb.net/MyFirstDatabase?retryWrites=true&w=majority",
     secret: process.env.DB_SECRET || "secret",
     
     pagination : {
-        limit : 2,
+        limit : 5,
         maxLimit : 30
     },
 
-    dateFormat : 'DD/MM/YYYY HH:mm:ss',
+    dateFormat : 'MM/DD/YYYY HH:mm:ss',
 
-    hooks : {
-        afterCreate : (record, options) => {
-            let log = {
-                type : 'afterCreate',
-                model : JSON.stringify(record),
-                date : Date.now()
-            }
-            logger.createDbLog(log);
-        },
+    mailTypes : {
+        meetMail : 0,
+        deleteAccMail : 1
+    },
 
-        beforeDestroy : (record, options) => {
-            let log = {
-                type : 'afterDestroy',
-                model : JSON.stringify(record),
-                date : Date.now()
-            }
-            logger.createDbLog(log);
-        }
-    }
+    
 }
