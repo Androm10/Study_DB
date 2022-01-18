@@ -1,6 +1,6 @@
 node_modules
 test.js
-index.js
+./index.js
 .env
 vscode.code-workspace
 src/form.html
