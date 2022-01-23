@@ -8,7 +8,7 @@ let walletController = {
     addMoney : async function(req, res, next) {
         
         try { 
-            let money = await walletService.addMoney(req.params.id, req.body.money)
+            let money = await walletService.addMoney(req.user.id, req.body.money)
             responseHandler.sendSuccess(res, money, 200);  
         }
         catch(error) {

@@ -27,6 +27,14 @@ let userInfo = sequelize.define(
         },
         about : {
             type: DataTypes.TEXT,
+        },
+        firstName : {
+            type: DataTypes.STRING(50),
+            field: 'first_name'
+        },
+        lastName : {
+            type: DataTypes.STRING(50),
+            field: 'last_name'
         }
     },
     {

@@ -42,9 +42,9 @@ module.exports = resultService = {
         let winningBets = await resultRepository.getAllBets(resultId);
 
         for(let winningBet of winningBets) {
+            
             let prize = Number(winningBet.money)*(1 + Number(result.coefficient));
-            console.log("!!!!!!!!!!!!!!COEF = " + result.coefficient);
-
+         
             await walletService.addMoney(winningBet.userId, prize);
         }
 

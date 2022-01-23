@@ -60,6 +60,15 @@ module.exports = userService = {
         let bet = await userRepository.getLastBet(userId);
         
         return bet;
+    },
+
+    editProfile : async function(userId, data) {
+        
+        let user = await userRepository.getById(userId);
+
+        let userInfo = await user.getInformation();
+
+        return await userInfo.update(data);
     }
 
     

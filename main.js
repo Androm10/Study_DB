@@ -12,7 +12,7 @@ const errorHandler = require('./src/middlewares/errorHandler');
 const errorLog = require('./src/middlewares/errorLog');
 const httpLog = require('./src/middlewares/httpLog');
 
-const autoDeletion = require('./src/utils/autoDelete');
+const jobs = require('./src/jobs');
 
 app.use(fileUpload({}));
 app.use(express.json());
@@ -36,7 +36,7 @@ function startServer() {
         app.listen(3000, () => {
             console.log('server: start listening');
 
-            setTimeout(autoDeletion, 5000);
+            setTimeout(jobs.autoDelete, 5000);
         });
     }
     catch(error) {

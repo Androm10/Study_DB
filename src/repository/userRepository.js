@@ -1,4 +1,4 @@
-const { QueryTypes } = require('sequelize');
+const { QueryTypes, Op } = require('sequelize');
 const sequelize = require('../database');
 const buildError = require('../utils/buildError');
 const crypt = require('../utils/crypt');
@@ -47,7 +47,7 @@ module.exports = userRepository = {
         if(limit || offset) {
             let res = await sequelize.models.users.findAndCountAll(
                 { limit: limit,
-                offset: offset 
+                offset: offset,             
                 }
             );
             return res;
@@ -57,6 +57,18 @@ module.exports = userRepository = {
             return res;
         }
 
+        /*
+        where : {
+                    [Op.or] : [
+                        {firstName : {
+                            [Op.like] : `%${firstName}`
+                        } },
+                        {lastName : {
+                            [Op.like] : `%${lastName}`
+                        } }
+                    ]
+                }  
+                */
     },
 
     addUser : async function(instance, username) {

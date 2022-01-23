@@ -24,7 +24,7 @@ module.exports = betService = {
 
         let user = await userRepository.getById(instance.userId);
         //CHECK IF USER ALREADY HAVE BET ON THIS EVENT
-        let bets = user.getBets();
+        let bets = await user.getBets();
         for(let userBet of bets){
             if(userBet.resultId == instance.resultId)
                 throw(buildError(400, 'already have bet on this event'));

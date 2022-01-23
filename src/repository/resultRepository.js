@@ -67,13 +67,14 @@ module.exports = resultRepos = {
             }
         );
     
-        let result = await sequelize.models.results.update(
-            { isWinner: true },
+        let result = await sequelize.models.results.findOne(
             { where : {
                 id : resultId
                 }
             }
         );
+
+        await result.update({ isWinner : "true"});
     
         return result;
 

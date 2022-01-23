@@ -28,7 +28,8 @@ module.exports = config = {
 
     mailTypes : {
         meetMail : 0,
-        deleteAccMail : 1
+        deleteAccMail : 1,
+        changePasswordMail : 2,
     },
 
     

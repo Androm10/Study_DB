@@ -14,6 +14,7 @@ module.exports = {
 
     types : {
         meet : 0,
-        deleteAcc : 1
+        deleteAcc : 1,
+        changePassword : 2,
     }
 }

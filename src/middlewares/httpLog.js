@@ -19,7 +19,10 @@ module.exports = async function(req, res, next) {
         date : Date.now()
     }
     
-    logger.createHttpLog(httpLog);
+    logger.createHttpLog(httpLog)
+    .catch(error => {
+        console.log("server: cannot create http log", error);
+    });
 
     next();
 }

@@ -33,33 +33,6 @@ let userController = {
 
     },
 
-
-    addUser : async function(req, res, next) {
-        
-        let user = {
-            login : req.body.login,
-            password : req.body.password
-        }
-
-        try {
-            let result = await userService.addUser(user, req.body.username);
-
-            let mail = {
-                email : user.login, 
-                nickname : req.body.username,
-                type : mailTypes.meetMail
-            }
-            //send data to mailer
-            sendToMailer(JSON.stringify(mail));
-
-            responseHandler.sendSuccess(res, result, 201);
-        }
-        catch(error) {
-            next(error);
-        }
-
-    },
-
     deleteAccount : async function(req, res, next) {
 
         try {
@@ -96,11 +69,12 @@ let userController = {
 
     mostPoints : async function(req,res,next) {
 
-        let date = req.query.date;
-        if(!date)
-            date = new Date();
-
         try {
+            let date = new Date(req.query.date);
+
+            if(!date)
+                date = new Date();
+
             let user = await userService.mostPoints(date);
             responseHandler.sendSuccess(res, user, 200);
         }
@@ -108,6 +82,25 @@ let userController = {
             next(error);
         }
 
+    },
+
+    editProfile : async function(req, res, next) {
+        
+        try {
+
+            let data = {
+                username : req.body.username,
+                about : req.body.about || "no info",
+                firstName : req.body.firstName,
+                lastName : req.body.lastName
+            }
+
+            let result = await userService.editProfile(req.user.id, data);    
+            responseHandler.sendSuccess(res, result, 200);
+        }
+        catch(error) {
+            next(error);
+        }
     }
 
   
