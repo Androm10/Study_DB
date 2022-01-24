@@ -42,33 +42,39 @@ module.exports = userRepository = {
         return userInfo.getUser();
     },
 
-    getAllUsers : async function(limit, offset) {
-
-        if(limit || offset) {
-            let res = await sequelize.models.users.findAndCountAll(
-                { limit: limit,
-                offset: offset,             
-                }
-            );
-            return res;
-        }
-        else {
-            let res = await sequelize.models.users.findAll();
-            return res;
+    getAllUsers : async function(limit, offset, filter) {
+        
+        let where = {
+            [Op.or] : [
+                {first_name : {
+                    [Op.like] : `${filter.firstName}%`
+                } },
+                {last_name : {
+                    [Op.like] : `${filter.lastName}%`
+                } }
+            ]
         }
 
-        /*
-        where : {
-                    [Op.or] : [
-                        {firstName : {
-                            [Op.like] : `%${firstName}`
-                        } },
-                        {lastName : {
-                            [Op.like] : `%${lastName}`
-                        } }
-                    ]
-                }  
-                */
+        if(!filter.firstName && !filter.lastName)
+            where = {};
+
+        let res = await sequelize.models.user_info.findAndCountAll(
+            { limit: limit,
+            offset: offset,
+            where : where              
+            }
+        );
+
+        let users = [];
+     
+        for(let info of res.rows) {
+            users.push(await info.getUser());
+        }
+        
+        res.rows = users;
+
+        return res;
+
     },
 
     getAllDevs : async function() {

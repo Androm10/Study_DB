@@ -17,7 +17,7 @@ userInfo.belongsTo( user, { foreignKey: 'userId', as: 'user' });
 user.hasOne( wallet, { foreignKey: 'userId', as: 'wallet' });
 wallet.belongsTo( user, { foreignKey: 'userId', as : 'user' });
 
-user.belongsToMany( role, { through: 'users_roles', foreignKey: 'userId', otherKey: 'roleId', as: 'role' });
+user.belongsToMany( role, { through: 'users_roles', foreignKey: 'userId', otherKey: 'roleId' });
 role.belongsToMany( user, { through: 'users_roles', foreignKey: 'roleId', otherKey: 'userId' });
 
 user.hasMany( bet, { foreignKey: 'userId', as: 'bets' });

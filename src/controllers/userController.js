@@ -11,8 +11,13 @@ let userController = {
 
     getAllUsers : async function(req, res, next) {
         
+        let filter = {
+            firstName : req.query.firstName || "",
+            lastName : req.query.lastName || ""
+        }
+
         try {
-            let users = await userService.getAllUsers(req.query.limit, req.skip);
+            let users = await userService.getAllUsers(req.query.limit, req.skip, filter);
             
             let instanceCount = users.count;
             let pageCount = Math.ceil(instanceCount / req.query.limit);
