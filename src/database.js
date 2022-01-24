@@ -17,8 +17,8 @@ userInfo.belongsTo( user, { foreignKey: 'userId', as: 'user' });
 user.hasOne( wallet, { foreignKey: 'userId', as: 'wallet' });
 wallet.belongsTo( user, { foreignKey: 'userId', as : 'user' });
 
-user.belongsToMany( role, { through: 'users_roles', foreignKey: 'userId', otherKey: 'roleId', as: 'roles' });
-role.belongsToMany( user, { through: 'users_roles', foreignKey: 'roleId', otherKey: 'userId', as: 'users' });
+user.belongsToMany( role, { through: 'users_roles', foreignKey: 'userId', otherKey: 'roleId', as: 'role' });
+role.belongsToMany( user, { through: 'users_roles', foreignKey: 'roleId', otherKey: 'userId' });
 
 user.hasMany( bet, { foreignKey: 'userId', as: 'bets' });
 bet.belongsTo( user, { foreignKey: 'userId', as: 'user' });
@@ -26,7 +26,7 @@ bet.belongsTo( user, { foreignKey: 'userId', as: 'user' });
 wallet.hasMany( operation, { foreignKey: 'walletId', as: 'operations' });
 operation.belongsTo( wallet, { foreignKey: 'walletId', as: 'wallet' });
 
-result.hasMany( bet, { foreignKey: 'resultId', as: 'onResult' });
+result.hasMany( bet, { foreignKey: 'resultId' });
 bet.belongsTo( result, { foreignKey: 'resultId', as: 'result' });
 
 event.hasMany( result, { foreignKey: 'eventId', as: 'results' });

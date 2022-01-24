@@ -4,7 +4,7 @@ const CronJob = require('cron').CronJob;
 
 module.exports = function() {
 
-    let job = new CronJob('* * 22 * * *', async function() {
+    let job = new CronJob('* * */23 * * *', async function() {
         let users = await userService.getAllUsers(null,null);
 
         for(let user of users) {

@@ -49,7 +49,7 @@ let resultController = {
     selectWinningResult : async function(req, res, next) {
         
         try {
-            let result = await resultService.selectWinningResult(req.params.id, req.params.resultId)
+            let result = await resultService.selectWinningResult(req.params.resultId)
             responseHandler.sendSuccess(res, result, 200);
         }
         catch(error) {

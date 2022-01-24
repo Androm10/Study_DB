@@ -101,6 +101,35 @@ let userController = {
         catch(error) {
             next(error);
         }
+    },
+
+    changePassword : async function(req, res, next) {
+
+        let data = {
+            newPassword : req.body.newPassword,
+            oldPassword : req.body.oldPassword
+        }
+
+        try {
+
+            let mail = {
+                email : req.user.login,
+                ip : req.ip,
+                browser : req.headers['user-agent'], 
+                type : mailTypes.changePasswordMail,
+                date : Date.now()
+            }
+
+            let result = await userService.changePassword(req.user.id, data);
+
+            //send data to mailer
+            sendToMailer(JSON.stringify(mail));
+
+            responseHandler.sendSuccess(res, result, 200);
+        }
+        catch(error) {
+            next(error);
+        }
     }
 
   

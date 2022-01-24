@@ -4,7 +4,7 @@ const walletRepository = require('../repository/walletRepository');
 
 module.exports = walletService = {
 
-     addMoney : async function(userId, money) {
+    addMoney : async function(userId, money) {
 
         let user = await userRepository.getById(userId);
         let wallet = await user.getWallet();
@@ -44,5 +44,41 @@ module.exports = walletService = {
 
         return walletRepository.getOperations(userId, limit, offset);
         
-    }
+    },
+
+    addPrize : async function(userId, money) {
+
+        let user = await userRepository.getById(userId);
+        let wallet = await user.getWallet();
+
+        let operation = {
+            walletId : wallet.id,
+            createAt : Date.now(),
+            type : "bet prize",
+            money : money,
+
+        }
+        wallet.createOperation(operation);
+        return walletRepository.addMoney(userId, money);
+        
+    },
+
+    betMoney : async function(userId, money) {
+
+        let user = await userRepository.getById(userId);
+        let wallet = await user.getWallet();
+
+        let operation = {
+            walletId : wallet.id,
+            createAt : Date.now(),
+            type : "bet cost",
+            money : money,
+
+        }
+
+        wallet.createOperation(operation);
+
+        return walletRepository.outputMoney(userId, money);
+    
+    },
 }

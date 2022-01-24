@@ -59,7 +59,7 @@ module.exports = resultRepos = {
 
     selectWinningResult : async function(eventId, resultId) {
 
-        sequelize.models.results.update( 
+        await sequelize.models.results.update( 
             { isWinner: false },
             { where : {
                 eventId : eventId

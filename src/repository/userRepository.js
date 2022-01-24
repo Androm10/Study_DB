@@ -71,6 +71,15 @@ module.exports = userRepository = {
                 */
     },
 
+    getAllDevs : async function() {
+
+        let role = await sequelize.models.roles.findOne({where : {name : "Dev"}});
+     
+        let devs = await role.getUsers();
+        
+        return devs;
+    },
+
     addUser : async function(instance, username) {
 
         let hashedPassword = await crypt.cryptPassword(instance.password);
@@ -90,6 +99,15 @@ module.exports = userRepository = {
         user.addRole(userRole);
 
         return user;
+    },
+
+    changePassword : async function(userId, password) {
+
+        let hashedPassword = await crypt.cryptPassword(password);
+        
+        let user = await sequelize.models.users.findByPk(userId);
+
+        return await user.update({ password : hashedPassword});
     },
 
     deleteAccount : async function(userId) {

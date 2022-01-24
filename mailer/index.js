@@ -24,7 +24,13 @@ async function startListening() {
         
         let context = {
             name: msg.nickname,
-            company: 'Nostradamus'
+            company: 'Nostradamus',
+            date : msg.date,
+            ip : msg.ip,
+            browser : msg.browser,
+            errorName : msg?.errorLog.name,
+            errorMessage : msg?.errorLog.message,
+            errorDate : msg?.errorLog.date
         }
         
         switch(msg.type) {
@@ -36,29 +42,16 @@ async function startListening() {
             case (config.types.deleteAcc) : 
                 sender.sendDeleteAccMail(transporter, config.email, msg.email, context); 
                 break;
+
+            case (config.types.changePassword) : 
+                sender.sendChangePasswordMail(transporter, config.email, msg.email, context); 
+                break;
+
+            case (config.types.error) : 
+                sender.sendErrorMail(transporter, config.email, msg.email, context); 
+                break;
         }    
-        
-        /*
-        var mailOptions = {
-            from: '"Anders" ' + `<${config.email}>`, 
-            to: msg.email, 
-            subject: 'Welcome!',
-            template: 'email', 
-            context:{
-                name: msg.nickname, 
-                company: 'Nostradamus'
-            }
-        };
-            
-            // trigger the sending of the E-mail
-        transporter.sendMail(mailOptions, function(error, info) {
-            if(error){
-                return console.log(error);
-            }
-            console.log('Message sent: ' + info.response);
-        });    
-        */
-            
+    
     }, {
         noAck: true
     });

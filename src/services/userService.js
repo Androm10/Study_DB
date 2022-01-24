@@ -1,6 +1,8 @@
 const express = require('express');
 const userRepository = require('../repository/userRepository');
 const buildError = require('../utils/buildError');
+const crypt = require('../utils/crypt');
+
 
 module.exports = userService = {
 
@@ -69,6 +71,23 @@ module.exports = userService = {
         let userInfo = await user.getInformation();
 
         return await userInfo.update(data);
+    },
+
+    changePassword : async function(userId, data) {
+        
+        let user = await userRepository.getById(userId);
+            
+        if(!crypt.comparePassword(data.oldPassword, user.password))
+            throw(buildError(400, 'Wrong old password'));
+
+        return await userRepository.changePassword(userId, data.newPassword);
+
+    },
+
+    getAllDevs : async function() {
+        let users = await userRepository.getAllDevs();
+
+        return users;
     }
 
     

@@ -16,5 +16,6 @@ module.exports = {
         meet : 0,
         deleteAcc : 1,
         changePassword : 2,
+        error : 3
     }
 }

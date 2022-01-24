@@ -30,6 +30,7 @@ module.exports = config = {
         meetMail : 0,
         deleteAccMail : 1,
         changePasswordMail : 2,
+        errorMail : 3,
     },
 
     

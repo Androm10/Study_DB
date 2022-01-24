@@ -4,6 +4,8 @@ const resultRepository = require('../repository/resultRepository');
 const betRepository = require('../repository/betRepository');
 const userRepository = require('../repository/userRepository');
 const buildError = require('../utils/buildError');
+const walletService = require('./walletService');
+
 
 module.exports = betService = {
 
@@ -31,14 +33,8 @@ module.exports = betService = {
         }
 
         let bet = await betRepository.addBet(instance);    
-        let wallet = await user.getWallet();
         
-        let sum = Number(wallet.money) - Number(bet.money);
-
-        if(+sum < 0)
-            throw(buildError(400, 'cannot bet more money than wallet have'));
-
-        wallet.update({money : sum});
+        await walletService.betMoney(user.id, bet.money);
 
         return bet;
     },

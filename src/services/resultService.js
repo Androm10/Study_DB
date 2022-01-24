@@ -23,29 +23,29 @@ module.exports = resultService = {
         return resultRepository.deleteResult(resultId);
     },
 
-    selectWinningResult : async function(id, resultId) {
+    selectWinningResult : async function(resultId) {
 
-        let event = await eventRepository.getEventById(id);
-        let associatedEvent = await resultRepository.getAssociatedEvent(resultId);
-        //if event does'nt exists - throw an error
-        if(!event)
-            throw(buildError(400, 'No Such event'));
-        
-        //if event doesn't matches the event associated to result - throw an error
-        if(JSON.stringify(event) !== JSON.stringify(associatedEvent))
-            throw(buildError(400, 'Event does not have requested result'));
-        
-        eventRepository.setEventCompleted(id);
-        await resultRepository.selectWinningResult(id, resultId);
-        
         let result = await resultRepository.getById(resultId);
-        let winningBets = await resultRepository.getAllBets(resultId);
+        
+        if(!result)
+            throw(buildError(400, 'no such result'));
 
+        let event = await result.getEvent();
+        
+        if(!event.isActive)
+            throw(buildError(400, 'event already completed'));
+
+        eventRepository.setEventCompleted(event.id);
+
+        await resultRepository.selectWinningResult(event.id, resultId);
+        
+        let winningBets = await result.getBets();
+        
         for(let winningBet of winningBets) {
-            
+
             let prize = Number(winningBet.money)*(1 + Number(result.coefficient));
-         
-            await walletService.addMoney(winningBet.userId, prize);
+            
+            await walletService.addPrize(winningBet.userId, prize);
         }
 
         return result;

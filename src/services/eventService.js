@@ -1,6 +1,7 @@
 const express = require('express');
 const eventRepository = require('../repository/eventRepository');
 const fs = require("fs");
+const buildError = require('../utils/buildError');
 
 
 module.exports = eventService = {
@@ -45,6 +46,7 @@ module.exports = eventService = {
 
     getAllEvents : async function(limit, offset) {
 
+        throw(buildError(500, 'test'));
         return eventRepository.getAllEvents(limit, offset);
     },
 

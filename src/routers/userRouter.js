@@ -6,6 +6,8 @@ const userController = require('../controllers/userController');
 
 const operationsValidator = require('../validators/operationsValidator');
 const userInfoValidator = require('../validators/userInfoValidator');
+const passwordValidator = require('../validators/passwordValidator');
+
 const validate = require('../middlewares/validationResultMiddle');
 const paginate = require('../middlewares/paginate');
          
@@ -22,7 +24,7 @@ router.post('/:id/wallet/outputMoney', operationsValidator, validate, walletCont
 router.get('/:id/bets', userController.getBets);
 router.put('/:id', userInfoValidator, validate, userController.editProfile);
 
-//router.put('/:id/changePasswordRequest', userController.changePassword);
+router.put('/:id/changePassword', passwordValidator, validate, userController.changePassword);
 
 
 router.get('/mostPoints', userController.mostPoints);
